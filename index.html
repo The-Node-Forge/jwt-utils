@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en" dir="ltr" class="plugin-pages plugin-id-default" data-has-hydrated="false">
+<head>
+<meta charset="UTF-8">
+<meta name="generator" content="Docusaurus v3.7.0">
+<title data-rh="true">npm-template | The Node Forge</title><meta data-rh="true" name="viewport" content="width=device-width,initial-scale=1"><meta data-rh="true" name="twitter:card" content="summary_large_image"><meta data-rh="true" property="og:image" content="https://the-node-forge.github.io/npm-template/img/theNodeForge.png"><meta data-rh="true" name="twitter:image" content="https://the-node-forge.github.io/npm-template/img/theNodeForge.png"><meta data-rh="true" property="og:url" content="https://the-node-forge.github.io/npm-template/"><meta data-rh="true" property="og:locale" content="en"><meta data-rh="true" name="docusaurus_locale" content="en"><meta data-rh="true" name="docusaurus_tag" content="default"><meta data-rh="true" name="docsearch:language" content="en"><meta data-rh="true" name="docsearch:docusaurus_tag" content="default"><meta data-rh="true" property="og:title" content="npm-template | The Node Forge"><meta data-rh="true" name="description" content="A fully-configured TypeScript NPM package template with built-in CI/CD, automated tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best practices for package development"><meta data-rh="true" property="og:description" content="A fully-configured TypeScript NPM package template with built-in CI/CD, automated tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best practices for package development"><link data-rh="true" rel="icon" href="/npm-template/img/favicon.ico"><link data-rh="true" rel="canonical" href="https://the-node-forge.github.io/npm-template/"><link data-rh="true" rel="alternate" href="https://the-node-forge.github.io/npm-template/" hreflang="en"><link data-rh="true" rel="alternate" href="https://the-node-forge.github.io/npm-template/" hreflang="x-default"><script data-rh="true">function insertBanner(){var n=document.createElement("div");n.id="__docusaurus-base-url-issue-banner-container";n.innerHTML='\n<div id="__docusaurus-base-url-issue-banner" style="border: thick solid red; background-color: rgb(255, 230, 179); margin: 20px; padding: 20px; font-size: 20px;">\n   <p style="font-weight: bold; font-size: 30px;">Your Docusaurus site did not load properly.</p>\n   <p>A very common reason is a wrong site <a href="https://docusaurus.io/docs/docusaurus.config.js/#baseUrl" style="font-weight: bold;">baseUrl configuration</a>.</p>\n   <p>Current configured baseUrl = <span style="font-weight: bold; color: red;">/npm-template/</span> </p>\n   <p>We suggest trying baseUrl = <span id="__docusaurus-base-url-issue-banner-suggestion-container" style="font-weight: bold; color: green;"></span></p>\n</div>\n',document.body.prepend(n);var e=document.getElementById("__docusaurus-base-url-issue-banner-suggestion-container"),s=window.location.pathname,o="/"===s.substr(-1)?s:s+"/";e.innerHTML=o}document.addEventListener("DOMContentLoaded",(function(){void 0===window.docusaurus&&insertBanner()}))</script><link rel="alternate" type="application/rss+xml" href="/npm-template/blog/rss.xml" title="The Node Forge RSS Feed">
+<link rel="alternate" type="application/atom+xml" href="/npm-template/blog/atom.xml" title="The Node Forge Atom Feed"><link rel="stylesheet" href="/npm-template/assets/css/styles.41fd28e6.css">
+<script src="/npm-template/assets/js/runtime~main.736381a6.js" defer="defer"></script>
+<script src="/npm-template/assets/js/main.f4dfc49c.js" defer="defer"></script>
+</head>
+<body class="navigation-with-keyboard">
+<script>!function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const n=new URLSearchParams(window.location.search).entries();for(var[t,e]of n)if(t.startsWith("docusaurus-data-")){var a=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(a,e)}}catch(t){}}()</script><div id="__docusaurus"><link rel="preload" as="image" href="/npm-template/img/theNodeForge.png"><link rel="preload" as="image" href="https://img.shields.io/badge/License-MIT-yellow.svg"><div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div><nav aria-label="Main" class="navbar navbar--fixed-top"><div class="navbar__inner"><div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button><a class="navbar__brand" href="/npm-template/"><div class="navbar__logo"><img src="/npm-template/img/theNodeForge.png" alt="The Node Forge Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/npm-template/img/theNodeForge.png" alt="The Node Forge Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">The Node Forge</b></a><a class="navbar__item navbar__link" href="/npm-template/docs/intro">Docs</a><a class="navbar__item navbar__link" href="/npm-template/docs/api">API</a></div><div class="navbar__items navbar__items--right"><a href="https://github.com/The-Node-Forge/npm-template" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a><div class="toggle_vylO colorModeToggle_DEke"><button class="clean-btn toggleButton_gllP toggleButtonDisabled_aARS" type="button" disabled="" title="Switch between dark and light mode (currently light mode)" aria-label="Switch between dark and light mode (currently light mode)" aria-live="polite" aria-pressed="false"><svg viewBox="0 0 24 24" width="24" height="24" class="lightToggleIcon_pyhR"><path fill="currentColor" d="M12,9c1.65,0,3,1.35,3,3s-1.35,3-3,3s-3-1.35-3-3S10.35,9,12,9 M12,7c-2.76,0-5,2.24-5,5s2.24,5,5,5s5-2.24,5-5 S14.76,7,12,7L12,7z M2,13l2,0c0.55,0,1-0.45,1-1s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S1.45,13,2,13z M20,13l2,0c0.55,0,1-0.45,1-1 s-0.45-1-1-1l-2,0c-0.55,0-1,0.45-1,1S19.45,13,20,13z M11,2v2c0,0.55,0.45,1,1,1s1-0.45,1-1V2c0-0.55-0.45-1-1-1S11,1.45,11,2z M11,20v2c0,0.55,0.45,1,1,1s1-0.45,1-1v-2c0-0.55-0.45-1-1-1C11.45,19,11,19.45,11,20z M5.99,4.58c-0.39-0.39-1.03-0.39-1.41,0 c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0s0.39-1.03,0-1.41L5.99,4.58z M18.36,16.95 c-0.39-0.39-1.03-0.39-1.41,0c-0.39,0.39-0.39,1.03,0,1.41l1.06,1.06c0.39,0.39,1.03,0.39,1.41,0c0.39-0.39,0.39-1.03,0-1.41 L18.36,16.95z M19.42,5.99c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06c-0.39,0.39-0.39,1.03,0,1.41 s1.03,0.39,1.41,0L19.42,5.99z M7.05,18.36c0.39-0.39,0.39-1.03,0-1.41c-0.39-0.39-1.03-0.39-1.41,0l-1.06,1.06 c-0.39,0.39-0.39,1.03,0,1.41s1.03,0.39,1.41,0L7.05,18.36z"></path></svg><svg viewBox="0 0 24 24" width="24" height="24" class="darkToggleIcon_wfgR"><path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"></path></svg></button></div><div class="navbarSearchContainer_Bca1"></div></div></div><div role="presentation" class="navbar-sidebar__backdrop"></div></nav><div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper_z2l0"><main><main class="container margin-vert--lg"><div style="text-align:center;margin-bottom:2rem"><img src="/npm-template/img/theNodeForge.png" alt="The Node Forge Logo" width="150" height="150" style="border-radius:50%"><h1 style="margin-top:1rem;font-size:2rem">The Node Forge presents:</h1></div><div align="center"><h2 style="font-size:2rem;color:var(--ifm-color-primary);text-align:center"><p>NPM-Template</p></h2><p><a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a></p></div>
+<p>Welcome to The-Node-Forge <strong>npm-template</strong>! This repository serves as a <strong>template</strong>
+for The Node Forge members to quickly scaffold a new <strong>TypeScript-based NPM package</strong>
+with built-in <strong>linting, testing, documentation, and CI/CD</strong>.</p>
+<hr>
+<h1 id="-getting-started">✨ Getting Started</h1>
+<p>To use this template, follow these steps:</p>
+<ol>
+<li><strong>Clone this repository</strong> or create a new one from this template.</li>
+<li><strong>Update necessary details in <code>package.json</code></strong>:<!-- -->
+<ul>
+<li><code>&quot;name&quot;</code> → Change to your package name.</li>
+<li><code>&quot;version&quot;</code> → Set your initial version (<code>1.0.0</code>).</li>
+<li><code>&quot;author&quot;</code> → Add your name.</li>
+<li><code>&quot;repository&quot;</code> → Update the GitHub URL (if not autogenerated).</li>
+</ul>
+</li>
+<li><strong>Install dependencies</strong>:<!-- -->
+<pre><code class="language-sh">npm install
+</code></pre>
+</li>
+<li><strong>Start development</strong>:<!-- -->
+<pre><code class="language-sh">npm run build
+</code></pre>
+</li>
+</ol>
+<hr>
+<h2 id="-available-scripts">📜 Available Scripts</h2>
+<p>The <code>package.json</code> includes several useful scripts:</p>
+<table><thead><tr><th>Script</th><th>Description</th></tr></thead><tbody><tr><td><code>npm run test</code></td><td>Runs Jest tests.</td></tr><tr><td><code>npm run test:watch</code></td><td>Runs Jest in watch mode.</td></tr><tr><td><code>npm run test:coverage</code></td><td>Runs Jest with coverage report.</td></tr><tr><td><code>npm run format</code></td><td>Formats the code using Prettier.</td></tr><tr><td><code>npm run format:check</code></td><td>Checks if code follows Prettier formatting.</td></tr><tr><td><code>npm run lint</code></td><td>Runs ESLint to check for issues.</td></tr><tr><td><code>npm run lint:fix</code></td><td>Automatically fixes lint issues.</td></tr><tr><td><code>npm run build</code></td><td>Compiles TypeScript code to JavaScript.</td></tr><tr><td><code>npm run docs:build</code></td><td>Builds documentation using Docusaurus.</td></tr><tr><td><code>npm run docs:start</code></td><td>Runs Docusaurus locally for preview.</td></tr><tr><td><code>npm run docs:clean</code></td><td>Cleans and rebuilds documentation.</td></tr><tr><td><code>npm run docs:deploy</code></td><td>Deploys docs to GitHub Pages.</td></tr></tbody></table>
+<hr>
+<h1 id="-documentation-with-docusaurus">📘 Documentation with Docusaurus</h1>
+<p>This repository uses <strong>Docusaurus</strong> to generate project documentation. Documentation
+lives in the <code>docs/docs/</code> folder.</p>
+<h2 id="️-customizing-documentation">✏️ Customizing Documentation</h2>
+<h2 id="1️⃣-enable-github-pages-for-your-repo">1️⃣ Enable github pages for your repo</h2>
+<ul>
+<li>Start by going to this repo in github vselect settings &gt; pages &gt; (build and
+development) &gt; deploy from branch &gt; gh-pages &gt; /(root)</li>
+</ul>
+<h2 id="2️⃣-where-to-edit-documentation">2️⃣ Where to Edit Documentation</h2>
+<h4 id="-docsdocusaurusconfigts">📂 <strong><code>docs/docusaurus.config.ts</code></strong></h4>
+<ul>
+<li>remove any instance of /npm-template/ and add your /repo-name/</li>
+<li>Edit baseUrl to match repo name /repo-name/.</li>
+<li>Edit meta data to matcg your package details, comments left to help</li>
+</ul>
+<h4 id="-docsdocs">📂 <strong><code>docs/docs/</code></strong></h4>
+<ul>
+<li>Houses main documentation files.</li>
+</ul>
+<h4 id="-docsdocsapi">📂 <strong><code>docs/docs/api/</code></strong></h4>
+<ul>
+<li><strong>Autogenerated API documentation</strong> from JSDoc comments.</li>
+</ul>
+<h4 id="-docsdocs-1">📂 <strong><code>docs/docs/</code></strong></h4>
+<ul>
+<li>6 Guides written in Markdown, all need to be filled out.</li>
+<li>API_REFERENCE, CHANGELOG, CODE_OF_CONDUCT, INSTALLATION, USAGE, intro.md (use
+readme.md info)</li>
+</ul>
+<h4 id="-docssrccomponentshomepagefeaturesindextsx">📂 <strong><code>docs/src/components/HomepageFeatures/index.tsx</code></strong></h4>
+<ul>
+<li>Edit Documentation Splashpage.</li>
+</ul>
+<hr>
+<h1 id="️-auto-generating-api-documentation">🛠️ Auto-Generating API Documentation</h1>
+<p>This repository uses <strong>JSDoc</strong> to document code and generate API references
+automatically.</p>
+<h2 id="-how-auto-documentation-works">🔍 How Auto Documentation Works</h2>
+<ul>
+<li>📂 <strong><code>docs/docs/api/</code></strong> → Contains autogenerated documentation.</li>
+<li><strong>JSDoc comments</strong> inside TypeScript files provide function and class
+documentation.</li>
+<li><strong>Docusaurus and TypeDoc</strong> process these comments into readable documentation.</li>
+</ul>
+<h4 id="-example-jsdoc-comment">✅ Example JSDoc Comment</h4>
+<pre><code class="language-ts">/**
+ * Generates a unique package identifier based on package name and version.
+ *
+ * @param {string} packageName - The name of the NPM package.
+ * @param {string} version - The package version (must follow SemVer: MAJOR.MINOR.PATCH).
+ * @returns {string} A unique identifier in the format &quot;packageName@version&quot;.
+ * @throws {Error} Throws an error if the version is not in SemVer format.
+ *
+ * @example
+ * const packageId = generatePackageIdentifier(&quot;my-awesome-package&quot;, &quot;1.2.3&quot;);
+ * console.log(packageId); // &quot;my-awesome-package@1.2.3&quot;
+ */
+
+export function generatePackageIdentifier(
+  packageName: string,
+  version: string,
+): string {
+  const semverRegex = /^\d+\.\d+\.\d+$/;
+
+  if (!semverRegex.test(version)) {
+    throw new Error(
+      &#x27;Invalid version format. Must follow Semantic Versioning: MAJOR.MINOR.PATCH&#x27;,
+    );
+  }
+
+  return `${packageName}@${version}`;
+}
+</code></pre>
+<h4 id="-generating-api-documentation">🔄 Generating API Documentation</h4>
+<p>To generate API documentation based on JSDoc comments, run:</p>
+<pre><code class="language-sh">npm run docs:build
+</code></pre>
+<p>This will create or update documentation inside <code>docs/docs/api/</code>.</p>
+<p>To preview the changes, run:</p>
+<pre><code class="language-sh">npm run docs:start
+</code></pre>
+<h2 id="3️⃣-building--running-documentation">3️⃣ Building &amp; Running Documentation</h2>
+<p>After you edit or majke any documentation changes you want to clean, and rebuild your
+docs</p>
+<p>To generate and preview documentation:</p>
+<pre><code class="language-sh">npm run docs:clean   # rm -rf docs/build and runs build
+npm run docs:start   # Run the docs locally
+</code></pre>
+<ul>
+<li>Open <strong><code>http://localhost:3000/</code></strong> to view the site.</li>
+</ul>
+<h4 id="to-deploy-to-github-pages">To deploy to GitHub Pages:</h4>
+<p>Your Docusaurus docs will build to github pages on push to main. Make sure all docs
+are filled out for a properly scaffolded documention gh-page</p>
+<hr>
+<h2 id="️-code-quality--formatting">🛠️ Code Quality &amp; Formatting</h2>
+<p>This template includes <strong>ESLint</strong> and <strong>Prettier</strong> to enforce code quality.</p>
+<h3 id="️-eslint-configuration">🛠️ ESLint Configuration</h3>
+<ul>
+<li>Enforces best practices and TypeScript rules.</li>
+<li>Ignores everything in <code>/docs/</code> (Docusaurus files).</li>
+<li>Auto-fixes issues using:<!-- -->
+<pre><code class="language-sh">npm run lint:fix
+</code></pre>
+</li>
+</ul>
+<h3 id="-prettier-configuration">🔧 Prettier Configuration</h3>
+<ul>
+<li>Formats the code automatically.</li>
+<li>Enforces consistent spacing, semicolons, and line breaks.</li>
+</ul>
+<p>To apply formatting:</p>
+<pre><code class="language-sh">npm run format
+</code></pre>
+<hr>
+<h2 id="️-continuous-integration-ci">⚖️ Continuous Integration (CI)</h2>
+<h3 id="-what-ci-does">🔄 What CI Does</h3>
+<ul>
+<li><strong>Runs tests automatically</strong> on every <code>push</code> or <code>pull request</code>.</li>
+<li><strong>Formats &amp; lints code</strong>, fixing issues before merging.</li>
+<li><strong>Prevents PRs without tests</strong>.</li>
+<li><strong>Uploads test coverage results</strong>.</li>
+</ul>
+<h3 id="️-how-ci-works-githubworkflowsciyaml">⚙️ How CI Works (<code>.github/workflows/ci.yaml</code>)</h3>
+<table><thead><tr><th>Step</th><th>Purpose</th></tr></thead><tbody><tr><td>✅ <strong>Install Dependencies</strong></td><td>Installs required NPM packages.</td></tr><tr><td>✅ <strong>Run Prettier</strong></td><td>Auto-formats code.</td></tr><tr><td>✅ <strong>Run ESLint</strong></td><td>Fixes linting issues.</td></tr><tr><td>✅ <strong>Check for Tests</strong></td><td>Ensures PRs include test files.</td></tr><tr><td>✅ <strong>Run Jest Tests</strong></td><td>Executes all unit tests.</td></tr><tr><td>✅ <strong>Upload Coverage</strong></td><td>Stores Jest test results.</td></tr><tr><td>✅ <strong>Commit Auto-Fixes</strong></td><td>Commits any auto-fixes to the branch.</td></tr></tbody></table>
+<p>If you push <strong>broken code</strong>, CI <strong>fails</strong> and prevents merging. 🚨</p>
+<hr>
+<h2 id="-final-checklist-for-new-repos">🌟 Final Checklist for New Repos</h2>
+<p>✔ <strong>Update <code>package.json</code></strong><br>
+<!-- -->✔ <strong>Modify documentation</strong> in <code>docs/</code><br>
+<!-- -->✔ <strong>Run tests before committing</strong> (<code>npm run test</code>)<br>
+<!-- -->✔ <strong>Ensure CI passes before merging</strong></p>
+<hr>
+<h2 id="-need-help">💡 Need Help?</h2>
+<p>If you run into any issues, reach out to <strong>The Node Forge team</strong> on GitHub!</p>
+<p>Happy coding! 🚀</p></main></main></div><footer class="footer footer--dark"><div class="container container-fluid"><div class="row footer__links"><div class="col footer__col"><div class="footer__title">Docs</div><ul class="footer__items clean-list"><li class="footer__item"><a class="footer__link-item" href="/npm-template/docs/intro">API</a></li></ul></div><div class="col footer__col"><div class="footer__title">Community</div><ul class="footer__items clean-list"><li class="footer__item"><a href="https://github.com/The-Node-Forge/npm-template" target="_blank" rel="noopener noreferrer" class="footer__link-item">GitHub<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></li></ul></div></div><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2025 The Node Forge. Built with Docusaurus.</div></div></div></footer></div>
+</body>
+</html>
