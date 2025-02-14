@@ -36,7 +36,6 @@ beforeAll(() => {
 afterAll(() => {
   if (server) {
     server.close();
-    console.log('✅ Koa server closed');
   }
 });
 

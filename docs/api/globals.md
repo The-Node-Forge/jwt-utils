@@ -1,9 +1,10 @@
-[**@the-node-forge/my-npm-package**](README.md)
+[**@the-node-forge/jwt-utils**](README.md)
 
----
+***
 
-# @the-node-forge/my-npm-package
+# @the-node-forge/jwt-utils
 
 ## Functions
 
-- [greet](functions/greet.md)
+- [generateToken](functions/generateToken.md)
+- [verifyToken](functions/verifyToken.md)

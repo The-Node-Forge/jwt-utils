@@ -1,7 +1,7 @@
 {
   "name": "@the-node-forge/jwt-utils",
   "version": "1.0.0",
-  "description": "A fully-configured TypeScript NPM package template with built-in CI/CD, automated tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best practices for package development",
+  "description": "JWT Utils is a lightweight, framework-agnostic Node.js package for generating, verifying, and managing JSON Web Tokens (JWTs). Designed for security and ease of use, it provides robust JWT authentication support for Express, Fastify, Koa, and other frameworks. Ideal for developers building secure APIs and authentication systems",
   "main": "src/index.ts",
   "types": "dist/index.d.ts",
   "scripts": {

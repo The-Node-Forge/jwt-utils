@@ -6,14 +6,15 @@ sidebar_position: 1
 
 # Documentation Index
 
-Welcome to the documentation for **jwt-utils**. Below is a list of available
-guides:
+Welcome to the documentation for **jwt-utils**. Below is a list of available guides:
 
 ## Description
 
-**A fully-configured TypeScript NPM package template with built-in CI/CD, automated
-tests, ESLint, Prettier, and Docusaurus documentation. Get started quickly with best
-practices for package development**
+**JWT Utils is a lightweight, framework-agnostic Node.js package for generating,
+verifying, and managing JSON Web Tokens (JWTs). Designed for security and ease of
+use, it provides robust JWT authentication support for Express, Fastify, Koa, and
+other frameworks. Ideal for developers building secure APIs and authentication
+systems**
 
 ### 📌 Getting Started
 

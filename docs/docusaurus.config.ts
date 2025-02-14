@@ -65,12 +65,12 @@ const config: Config = {
           label: 'Docs',
         },
 
-        {
-          type: 'docSidebar',
-          sidebarId: 'apiSidebar',
-          position: 'left',
-          label: 'API',
-        },
+        // {
+        //   type: 'docSidebar',
+        //   sidebarId: 'apiSidebar',
+        //   position: 'left',
+        //   label: 'API',
+        // },
         // uncomment to enable blogs
         // { to: '/blog', label: 'Blog', position: 'left' },
         {
