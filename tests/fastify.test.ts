@@ -1,50 +1,72 @@
-// import Fastify from 'fastify';
-// import request from 'supertest';
-// import { generateToken } from '../src/jwt';
-// import authenticateToken from '../src/middleware/fastify';
+import Fastify from 'fastify';
+import request from 'supertest';
+import { generateToken } from '../src/jwt';
+import authenticateToken from '../src/middleware/fastify';
 
-// const app = Fastify();
-// app.register(authenticateToken);
+const app = Fastify();
 
-// app.get('/protected', async (req, reply) => {
-//   if (!(req as any).user) return reply.status(401).send({ message: 'Unauthorized' });
-//   return { message: 'Protected', user: (req as any).user };
-// });
+console.log('🔹 Registering authenticateToken middleware...');
+app.addHook('onRequest', authenticateToken); // ✅ Attach middleware as a global hook
 
-// beforeAll(async () => {
-//   await app.ready(); // ✅ Ensures Fastify initializes before tests
-// });
+app.get('/protected', async (req, reply) => {
+  console.log('🔹 Handling request in /protected route...');
+  console.log('🔹 Current request user:', (req as any).user || 'No user found');
 
-// afterAll(async () => {
-//   await app.close(); // ✅ Clean up after tests
-// });
+  if (!(req as any).user) {
+    console.log('❌ User not found in request');
+    return reply.status(401).send({ message: 'Unauthorized' });
+  }
+  reply.send({ message: 'Protected', user: (req as any).user });
+});
+beforeAll(async () => {
+  console.log('🔹 Starting Fastify app...');
+  await app.ready();
+});
 
-// describe('Fastify Middleware: authenticateToken', () => {
-//   let token: string;
+afterAll(async () => {
+  console.log('🔹 Closing Fastify app...');
+  await app.close();
+  console.log('✅ Fastify server closed');
+});
 
-//   beforeAll(() => {
-//     token = generateToken({ id: 'test-user', role: 'admin' });
-//   });
+describe('Fastify Middleware: authenticateToken', () => {
+  let token: string;
 
-//   test('✅ Allows access with valid token', async () => {
-//     const response = await request(app.server)
-//       .get('/protected')
-//       .set('Authorization', `Bearer ${token}`);
+  beforeAll(() => {
+    token = generateToken({ id: 'test-user', role: 'admin' });
+    console.log('🔹 Test token generated:', token);
+  });
 
-//     expect(response.status).toBe(200);
-//     expect(response.body.user.id).toBe('test-user');
-//   });
+  test('✅ Allows access with valid token', async () => {
+    console.log('🔹 Sending request with valid token...');
+    const response = await request(app.server)
+      .get('/protected')
+      .set('Authorization', `Bearer ${token}`);
 
-//   test('❌ Rejects access with missing token', async () => {
-//     const response = await request(app.server).get('/protected');
-//     expect(response.status).toBe(401);
-//   });
+    console.log('🔹 Response status:', response.status);
+    console.log('🔹 Response body:', response.body);
 
-//   test('❌ Rejects access with invalid token', async () => {
-//     const response = await request(app.server)
-//       .get('/protected')
-//       .set('Authorization', 'Bearer invalid_token');
+    expect(response.status).toBe(200);
+  });
 
-//     expect(response.status).toBe(403);
-//   });
-// });
+  test('❌ Rejects access with invalid token', async () => {
+    console.log('🔹 Sending request with malformed token...');
+    const response = await request(app.server)
+      .get('/protected')
+      .set('Authorization', 'Bearer invalid_token');
+
+    console.log('🔹 Response status:', response.status);
+    console.log('🔹 Response body:', response.body);
+
+    expect(response.status).toBe(403);
+  });
+
+  test('❌ Rejects access with invalid token', async () => {
+    console.log('🔹 Sending request with invalid token...');
+    const response = await request(app.server)
+      .get('/protected')
+      .set('Authorization', 'Bearer invalid_token');
+
+    expect(response.status).toBe(403);
+  });
+});

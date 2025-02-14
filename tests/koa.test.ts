@@ -5,7 +5,6 @@ import { globalAuthHandler } from '../src/middleware/koa';
 
 const app = new Koa();
 
-// ✅ First, check if a route exists
 app.use(async (ctx, next) => {
   await next();
   if (ctx.status === 404) {
@@ -14,10 +13,8 @@ app.use(async (ctx, next) => {
   }
 });
 
-// ✅ Apply global authentication middleware
 app.use(globalAuthHandler);
 
-// ✅ Define a protected route
 app.use(async (ctx) => {
   if (ctx.path === '/protected') {
     if (!ctx.state.user) {
@@ -30,8 +27,18 @@ app.use(async (ctx) => {
   }
 });
 
-// ✅ Start the server
-const server = app.listen();
+let server: any;
+
+beforeAll(() => {
+  server = app.listen();
+});
+
+afterAll(() => {
+  if (server) {
+    server.close();
+    console.log('✅ Koa server closed');
+  }
+});
 
 describe('Koa Middleware: globalAuthHandler (No koa-router)', () => {
   let token: string;
