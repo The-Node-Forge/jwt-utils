@@ -1,6 +1,6 @@
 **@the-node-forge/jwt-utils**
 
-***
+---
 
 <div align="center">
 
