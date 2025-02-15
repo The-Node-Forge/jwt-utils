@@ -8,11 +8,10 @@
 
 </div>
 
-**JWT Utils is a lightweight, framework-agnostic Node.js package for generating,
-verifying, and managing JSON Web Tokens (JWTs). Designed for security and ease of
-use, it provides robust JWT authentication support for Express, Fastify, Koa, and
-other frameworks. Ideal for developers building secure APIs and authentication
-systems.**
+**A fast, lightweight Node.js JWT library for generating, verifying, and managing
+JSON Web Tokens (JWTs). Supports authentication and token-based authorization for
+APIs built with Fastify, Koa, and Express. Ideal for securing web applications,
+handling user authentication, and implementing role-based access control.**
 
 ---
 
