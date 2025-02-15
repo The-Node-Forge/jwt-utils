@@ -1,6 +1,6 @@
 [**@the-node-forge/jwt-utils**](README.md)
 
-***
+---
 
 # @the-node-forge/jwt-utils
 
