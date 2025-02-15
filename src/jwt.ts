@@ -4,7 +4,7 @@ const SECRET_KEY = '1234567890';
 
 export interface TokenPayload {
   id: string;
-  [key: string]: any;
+  role: string;
 }
 
 export function generateToken(

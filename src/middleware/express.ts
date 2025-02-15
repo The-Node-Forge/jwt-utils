@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
+
 let express: any;
 
 try {
@@ -9,6 +11,7 @@ try {
 }
 
 import { Request, Response, NextFunction } from 'express';
+
 import { verifyToken } from '../jwt';
 
 export const authenticateToken = (

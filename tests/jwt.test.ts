@@ -1,7 +1,7 @@
 import { generateToken, verifyToken } from '../src/jwt';
 
 describe('JWT Utility Functions', () => {
-  const payload = { id: '12345', customProp: 'admin' };
+  const payload = { id: '12345', role: 'admin' };
   let token: string;
 
   beforeAll(() => {

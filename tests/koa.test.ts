@@ -1,5 +1,7 @@
 import Koa from 'koa';
 import request from 'supertest';
+import { Server } from 'http';
+
 import { generateToken } from '../src/jwt';
 import { globalAuthHandler } from '../src/middleware/koa';
 
@@ -27,7 +29,7 @@ app.use(async (ctx) => {
   }
 });
 
-let server: any;
+let server: Server;
 
 beforeAll(() => {
   server = app.listen();

@@ -1,5 +1,6 @@
 import express from 'express';
 import request from 'supertest';
+
 import { generateToken } from '../src/jwt';
 import { authenticateToken } from '../src/middleware/express';
 

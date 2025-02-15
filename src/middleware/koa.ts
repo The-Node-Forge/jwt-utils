@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
+
 let Koa: any;
+
 try {
   Koa = require('koa');
 } catch (err) {
@@ -6,6 +9,7 @@ try {
 }
 
 import { Context, Next } from 'koa';
+
 import { verifyToken } from '../jwt';
 
 export async function globalAuthHandler(ctx: Context, next: Next) {

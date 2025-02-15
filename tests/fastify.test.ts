@@ -1,11 +1,12 @@
 import Fastify from 'fastify';
 import request from 'supertest';
+
 import { generateToken } from '../src/jwt';
 import authenticateToken from '../src/middleware/fastify';
 
 const app = Fastify();
 
-app.addHook('onRequest', authenticateToken); // ✅ Attach middleware as a global hook
+app.addHook('onRequest', authenticateToken);
 
 app.get('/protected', async (req, reply) => {
   if (!(req as any).user) {
