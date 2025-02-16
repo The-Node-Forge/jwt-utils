@@ -10,6 +10,7 @@
     "rootDir": ".",                      // Directory containing source files
     "moduleResolution": "node",
     "resolveJsonModule": true,
+    "typeRoots": ["./node_modules/@types", "./src/types"],
   },
   "include": ["src/**/*", "tests"],              // Files to include in compilation
   "exclude": ["node_modules"]  // Files/directories to exclude

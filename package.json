@@ -89,7 +89,11 @@
   "peerDependencies": {
     "express": ">=4.0.0",
     "fastify": ">=4.0.0",
-    "koa": ">=2.0.0"
+    "koa": ">=2.0.0",
+    "@hapi/hapi": ">=21.0.0",
+    "next": ">=12.0.0",
+    "@nestjs/common": ">=9.0.0",
+    "@nestjs/core": ">=9.0.0"
   },
   "dependencies": {
     "jsonwebtoken": "^9.0.2"
