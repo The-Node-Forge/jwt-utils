@@ -256,18 +256,6 @@ app.get('/admin', authorizeRoles('admin'), (req, res) => {
 - Store **tokens in HTTP-only cookies** instead of local storage when possible.
 - Implement **refresh tokens** for long-term authentication.
 
----
-
-## **🛠️ Roadmap & Future Features**
-
-📌 **Planned Updates:**
-
-- ✅ Add support for **Express.js middleware**
-- 🔜 Role-based access control (RBAC) middleware
-- 🔜 Refresh token implementation
-
-Want to suggest a feature? Open an
-**[issue](https://github.com/the-node-forge/jwt-utils/issues)** or **contribute**!
 
 ---
 
@@ -278,6 +266,9 @@ This project is licensed under the **MIT License**.
 ---
 
 ## **🤝 Contributing**
+
+Want to suggest a feature? Open an
+**[issue](https://github.com/the-node-forge/jwt-utils/issues)** or **contribute**!
 
 We welcome contributions!
 
