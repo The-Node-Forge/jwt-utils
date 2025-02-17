@@ -256,7 +256,6 @@ app.get('/admin', authorizeRoles('admin'), (req, res) => {
 - Store **tokens in HTTP-only cookies** instead of local storage when possible.
 - Implement **refresh tokens** for long-term authentication.
 
-
 ---
 
 ## **🌍 License**
