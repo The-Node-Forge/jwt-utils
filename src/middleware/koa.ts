@@ -1,39 +1,61 @@
-/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
-
-let Koa: any;
-
-try {
-  Koa = require('koa');
-} catch (err) {
-  throw new Error('Koa is not installed. Please install it with: npm install koa');
-}
-
 import { Context, Next } from 'koa';
 
-import { verifyToken } from '../jwt';
+import { verifyToken, verifyRefreshToken } from '../jwt';
 
-export async function globalAuthHandler(ctx: Context, next: Next) {
-  // Skip authentication for unknown routes
-  if (ctx.path !== '/protected') {
+export function authenticateToken(accessSecret: string) {
+  return async (ctx: Context, next: Next) => {
+    // skip auth for unknown routes
+    if (ctx.path !== '/protected') {
+      await next();
+      return;
+    }
+
+    const authHeader = ctx.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      ctx.status = 401;
+      ctx.body = { message: 'Unauthorized: No token provided or invalid format' };
+      return;
+    }
+
+    const [, token] = authHeader.split(' ');
+    const user = verifyToken(token, accessSecret);
+
+    if (!user) {
+      ctx.status = 403;
+      ctx.body = { message: 'Forbidden: Invalid or expired token' };
+      return;
+    }
+
+    ctx.state.user = user;
     await next();
-    return;
-  }
+  };
+}
 
-  const token = ctx.headers.authorization?.split(' ')[1];
+export function authenticateRefreshToken(refreshSecret: string) {
+  return async (ctx: Context, next: Next) => {
+    if (ctx.path !== '/refresh') {
+      await next();
+      return;
+    }
 
-  if (!token) {
-    ctx.status = 401; // Missing token = Unauthorized
-    ctx.body = { message: 'Unauthorized: No token provided' };
-    return;
-  }
+    const authHeader = ctx.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      ctx.status = 401;
+      ctx.body = { message: 'Unauthorized: No token provided or invalid format' };
+      return;
+    }
 
-  const user = verifyToken(token);
-  if (!user) {
-    ctx.status = 403; // Invalid token = Forbidden
-    ctx.body = { message: 'Forbidden: Invalid or expired token' };
-    return;
-  }
+    const [, token] = authHeader.split(' ');
+    const user = verifyRefreshToken(token, refreshSecret);
 
-  ctx.state.user = user;
-  await next(); // Allow protected route to execute
+    if (!user) {
+      ctx.status = 403;
+      ctx.body = { message: 'Forbidden: Invalid or expired refresh token' };
+      return;
+    }
+
+    ctx.state.user = user;
+    ctx.status = 200;
+    await next();
+  };
 }

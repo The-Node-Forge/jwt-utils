@@ -1,37 +1,45 @@
-/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-let express: any;
+import { verifyToken, verifyRefreshToken } from '../jwt';
 
-try {
-  express = require('express');
-} catch (err) {
-  throw new Error(
-    'Express is not installed. Please install it with: npm install express',
-  );
-}
+export const authenticateToken = (accessSecret: string): RequestHandler => {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
 
-import { Request, Response, NextFunction } from 'express';
+    const [, token] = authHeader.split(' ');
+    const user = verifyToken(token, accessSecret);
 
-import { verifyToken } from '../jwt';
+    if (!user) {
+      res.status(403).json({ message: 'Forbidden' });
+      return;
+    }
 
-export const authenticateToken = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): void => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+    (req as any).user = user;
+    next();
+  };
+};
 
-  if (!token) {
-    res.sendStatus(401);
-    return;
-  }
+export const authenticateRefreshToken = (refreshSecret: string): RequestHandler => {
+  return (req: Request, res: Response, next: NextFunction): void => {
+    const authHeader = req.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      res.status(401).json({ message: 'Unauthorized' });
+      return;
+    }
 
-  const user = verifyToken(token);
-  if (!user) {
-    res.sendStatus(403);
-    return;
-  }
-  (req as any).user = user;
-  next();
+    const [, token] = authHeader.split(' ');
+    const user = verifyRefreshToken(token, refreshSecret);
+
+    if (!user) {
+      res.status(403).json({ message: 'Forbidden' });
+      return;
+    }
+
+    (req as any).user = user;
+    next();
+  };
 };

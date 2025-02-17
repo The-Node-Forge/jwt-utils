@@ -11,12 +11,30 @@
 
 </div>
 
+**A fast, lightweight Node.js JWT library for generating, verifying, and managing
+JSON Web Tokens (JWTs). Supports authentication and token-based authorization for
+APIs built with Express, Fastify, Koa, Hapi, NestJS, and Next.js. Ideal for securing
+web applications, handling user authentication, and implementing role-based access
+control (RBAC).**
+
+---
+
 **JWT Utils** is a fast, lightweight, and framework-agnostic Node.js library for
 generating, verifying, and managing JSON Web Tokens (JWTs). It simplifies
 authentication and token-based authorization for web applications and APIs.
 
 ## **🚀 Features**
 
+- ✅ **Generate JWTs** – Create signed JWTs with custom payloads and expiration
+  times.
+- ✅ **Verify JWTs** – Securely decode and verify tokens.
+- ✅ **Access & Refresh Tokens** – Implement authentication with refresh token
+  support.
+- ✅ **Framework-Agnostic Middleware** – Works with Express, Fastify, Koa, Hapi,
+  NestJS, and Next.js.
+- ✅ **RBAC Middleware** – Control access based on user roles.
+- ✅ **TypeScript Support** – Fully typed for safer development.
+- ✅ **Lightweight & Secure** – Uses `jsonwebtoken` with best security practices.
 - ✅ Generate and verify **JWTs** easily
 - ✅ Support for **Fastify, Koa, and Express** middleware
 - ✅ Framework-agnostic core utilities
@@ -41,37 +59,122 @@ yarn add @the-node-forge/jwt-utils
 
 ## **🔧 Usage**
 
+### **Generating Access & Refresh Tokens**
+
 ### **1⃣ Generate a Token**
 
 ```ts
-import { generateToken } from '@the-node-forge/jwt-utils';
+import { generateTokens } from '@the-node-forge/jwt-utils';
 
+const accessSecret = 'your-access-secret';
+const refreshSecret = 'your-refresh-secret';
+
+const { accessToken, refreshToken } = generateTokens(
+  { id: 'user123', role: 'admin' },
+  accessSecret,
+  refreshSecret,
+);
+console.log('Access Token:', accessToken);
+console.log('Refresh Token:', refreshToken);
 const token = generateToken({ id: 'user123', role: 'admin' });
 
 console.log(token);
 ```
 
+### **Verifying Tokens**
+
 ### **2⃣ Verify a Token**
 
 ```ts
-import { verifyToken } from '@the-node-forge/jwt-utils';
+import { verifyToken, verifyRefreshToken } from '@the-node-forge/jwt-utils';
+
+const decodedAccess = verifyToken(accessToken, accessSecret);
+const decodedRefresh = verifyRefreshToken(refreshToken, refreshSecret);
+
+console.log('Decoded Access Token:', decodedAccess);
+console.log('Decoded Refresh Token:', decodedRefresh);
+```
+
+---
+
+## 🚀 **Integration with Web Frameworks**
+
+### **Express Middleware**
+
+```ts
+import express from 'express';
+import {
+  authenticateToken,
+  authenticateRefreshToken,
+} from '@the-node-forge/jwt-utils/middleware/express';
+
+const app = express();
+const accessSecret = 'your-access-secret';
+const refreshSecret = 'your-refresh-secret';
+
+app.use(authenticateToken(accessSecret));
+
+app.get('/protected', (req, res) => {
+  res.json({ message: 'Protected route', user: req.user });
+});
+
+app.get('/refresh', authenticateRefreshToken(refreshSecret), (req, res) => {
+  res.json({ message: 'Refresh Token Valid', user: req.user });
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+
+### **Fastify Middleware**
+
+```ts
+import Fastify from 'fastify';
+import {
+  authenticateToken,
+  authenticateRefreshToken,
+} from '@the-node-forge/jwt-utils/middleware/fastify';
+
+const app = Fastify();
+const accessSecret = 'your-access-secret';
+const refreshSecret = 'your-refresh-secret';
+
+app.addHook('onRequest', authenticateToken(accessSecret));
+app.get('/protected', async (req, reply) => {
+  return { message: 'Protected route', user: req.user };
+});
+
+app.addHook('onRequest', authenticateRefreshToken(refreshSecret));
+app.get('/refresh', async (req, reply) => {
+  return { message: 'Refresh Token Valid', user: req.user };
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
+
+### **Koa Middleware**
 
 const decoded = verifyToken(token);
 
-if (decoded) {
-  console.log('Token is valid', decoded);
-} else {
-  console.log('Invalid token');
-}
-```
+if (decoded) { console.log('Token is valid', decoded); } else { console.log('Invalid
+token'); }
+
+````
 
 ### **3⃣ Koa Middleware Example**
 
 ```ts
 import Koa from 'koa';
-import { globalAuthHandler } from '@the-node-forge/jwt-utils/middleware/koa';
+import {
+  authenticateToken,
+  authenticateRefreshToken,
+} from '@the-node-forge/jwt-utils/middleware/koa';
 
 const app = new Koa();
+const accessSecret = 'your-access-secret';
+const refreshSecret = 'your-refresh-secret';
+
+app.use(authenticateToken(accessSecret));
+app.use(authenticateRefreshToken(refreshSecret));
 
 app.use(globalAuthHandler);
 
@@ -85,7 +188,7 @@ app.use(async (ctx) => {
 });
 
 app.listen(3000, () => console.log('Koa server running on port 3000'));
-```
+````
 
 ### **4⃣ Fastify Middleware Example**
 
@@ -105,6 +208,43 @@ app.get('/protected', async (req, reply) => {
 });
 
 app.listen({ port: 3000 }, () => console.log('Fastify server running on port 3000'));
+```
+
+### **Hapi Middleware**
+
+```ts
+import Hapi from '@hapi/hapi';
+import {
+  authenticateToken,
+  authenticateRefreshToken,
+} from '@the-node-forge/jwt-utils/middleware/hapi';
+
+const server = Hapi.server();
+const accessSecret = 'your-access-secret';
+const refreshSecret = 'your-refresh-secret';
+
+server.route({
+  method: 'GET',
+  path: '/protected',
+  options: { pre: [{ method: authenticateToken(accessSecret) }] },
+  handler: (request, h) => {
+    return { message: 'Protected route', user: request.app.user };
+  },
+});
+
+server.start().then(() => console.log('Server running on port 3000'));
+```
+
+---
+
+## 🛡 **Role-Based Access Control (RBAC)**
+
+```ts
+import { authorizeRoles } from '@the-node-forge/jwt-utils/middleware/rbac';
+
+app.get('/admin', authorizeRoles('admin'), (req, res) => {
+  res.json({ message: 'Welcome Admin', user: req.user });
+});
 ```
 
 ---

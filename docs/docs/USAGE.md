@@ -1,18 +1,27 @@
 ---
 title: Usage
-description: Basic example and config.
+description: Basic example and configuration.
 sidebar_position: 3
 ---
 
 ## Basic Example
 
-### Generating a JWT
+### Generating Access and Refresh Tokens
 
 ```ts
-import { generateToken } from '@the-node-forge/jwt-utils';
+import { generateTokens } from '@the-node-forge/jwt-utils';
 
-const token = generateToken({ id: '12345', role: 'admin' }, '1h');
-console.log('Generated Token:', token);
+const accessSecret = 'your-access-secret';
+const refreshSecret = 'your-refresh-secret';
+
+const { accessToken, refreshToken } = generateTokens(
+  { id: '12345', role: 'admin' },
+  accessSecret,
+  refreshSecret,
+);
+
+console.log('Access Token:', accessToken);
+console.log('Refresh Token:', refreshToken);
 ```
 
 ### Verifying a JWT
@@ -21,7 +30,8 @@ console.log('Generated Token:', token);
 import { verifyToken } from '@the-node-forge/jwt-utils';
 
 const token = 'your_jwt_token_here';
-const decoded = verifyToken(token);
+const secret = 'your-access-secret';
+const decoded = verifyToken(token, secret);
 
 if (decoded) {
   console.log('Token is valid:', decoded);
@@ -30,14 +40,33 @@ if (decoded) {
 }
 ```
 
+### Verifying a Refresh Token
+
+```ts
+import { verifyRefreshToken } from '@the-node-forge/jwt-utils';
+
+const refreshToken = 'your_refresh_jwt_token_here';
+const refreshSecret = 'your-refresh-secret';
+const decoded = verifyRefreshToken(refreshToken, refreshSecret);
+
+if (decoded) {
+  console.log('Refresh token is valid:', decoded);
+} else {
+  console.log('Invalid or expired refresh token');
+}
+```
+
 ---
 
 ## Configuration
 
+JWT expiration can be configured in seconds, minutes, hours, or days:
+
 ```json
 {
-  "expiresIn": "1h"
+  "accessExpiresIn": "15m",
+  "refreshExpiresIn": "7d"
 }
 ```
 
-For API details, see [API Reference](./API_REFERENCE.md).
+For detailed API usage, see the [API Reference](./API_REFERENCE.md).

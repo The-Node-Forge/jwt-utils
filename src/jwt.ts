@@ -1,25 +1,41 @@
 import jwt from 'jsonwebtoken';
 
-const SECRET_KEY = '1234567890';
-
 export interface TokenPayload {
   id: string;
   role: string;
 }
 
-export function generateToken(
+export function generateTokens(
   payload: TokenPayload,
-  expiresIn: string = '1h',
-): string {
-  return jwt.sign(payload, SECRET_KEY, { expiresIn } as jwt.SignOptions);
+  accessSecret: string,
+  refreshSecret: string,
+) {
+  const accessToken = jwt.sign(payload, accessSecret, { expiresIn: '15m' });
+  const refreshToken = jwt.sign(payload, refreshSecret, { expiresIn: '7d' });
+
+  return { accessToken, refreshToken };
 }
 
-export function verifyToken(token: string) {
+export function verifyToken(token: string, accessSecret: string) {
   try {
-    const decoded = jwt.verify(token, SECRET_KEY);
-    return decoded;
+    return jwt.verify(token, accessSecret);
   } catch (err: any) {
     console.error('❌ JWT Verification Error:', err.message);
     return null;
   }
+}
+
+export function verifyRefreshToken(token: string, refreshSecret: string) {
+  try {
+    return jwt.verify(token, refreshSecret);
+  } catch (err: any) {
+    console.error('❌ JWT Refresh Token Verification Error:', err.message);
+    return null;
+  }
+}
+
+// Optionally revoke a refresh token (if storing refresh tokens in a database)
+export function revokeRefreshToken(token: string) {
+  // Example: Store invalidated tokens in a database or cache
+  console.warn('⚠️ Refresh token revoked:', token);
 }
