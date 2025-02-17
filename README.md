@@ -159,7 +159,7 @@ const decoded = verifyToken(token);
 if (decoded) { console.log('Token is valid', decoded); } else { console.log('Invalid
 token'); }
 
-````
+```
 
 ### ** Koa Middleware Example**
 
@@ -189,7 +189,7 @@ app.use(async (ctx) => {
 });
 
 app.listen(3000, () => console.log('Koa server running on port 3000'));
-````
+```
 
 ### ** Fastify Middleware Example**
 
