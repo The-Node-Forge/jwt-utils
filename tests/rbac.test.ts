@@ -1,5 +1,6 @@
-import { authorizeRoles } from '../src/middleware/rbac';
 import { Request, Response, NextFunction } from 'express';
+
+import { authorizeRoles } from '../src/middleware/rbac';
 
 describe('RBAC Middleware', () => {
   let mockReq: Partial<Request>;

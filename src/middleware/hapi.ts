@@ -1,5 +1,6 @@
-import { verifyToken } from '../jwt';
 import { Request, ResponseToolkit, Lifecycle } from '@hapi/hapi';
+
+import { verifyToken } from '../jwt';
 
 declare module '@hapi/hapi' {
   interface RequestApplicationState {

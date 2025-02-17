@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { verifyToken } from '../jwt';
 
 export function withAuth(

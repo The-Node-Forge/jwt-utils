@@ -1,7 +1,11 @@
+import {
+  UnauthorizedException,
+  ForbiddenException,
+  ExecutionContext,
+} from '@nestjs/common';
+
 import { JwtAuthGuard } from '../src/middleware/nest';
-import { ExecutionContext } from '@nestjs/common';
 import { generateToken } from '../src/jwt';
-import { UnauthorizedException, ForbiddenException } from '@nestjs/common';
 
 describe('NestJS JWT Guard', () => {
   let guard: JwtAuthGuard;

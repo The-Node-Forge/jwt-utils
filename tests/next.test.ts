@@ -1,6 +1,7 @@
+import { NextApiRequest, NextApiResponse } from 'next';
+
 import { withAuth } from '../src/middleware/next';
 import { generateToken } from '../src/jwt';
-import { NextApiRequest, NextApiResponse } from 'next';
 
 describe('Next.js Middleware', () => {
   let mockReq: Partial<NextApiRequest>;

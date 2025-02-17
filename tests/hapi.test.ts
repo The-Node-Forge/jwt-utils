@@ -1,4 +1,5 @@
 import Hapi from '@hapi/hapi';
+
 import { authenticateToken } from '../src/middleware/hapi';
 import { generateToken } from '../src/jwt';
 
