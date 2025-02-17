@@ -1,8 +1,11 @@
 <div align="center">
 
-# JWT Utils
+# JWT Utils – Lightweight JWT Authentication for Node.js
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+[![NPM Version](https://img.shields.io/npm/v/@the-node-forge/jwt-utils)](https://www.npmjs.com/package/@the-node-forge/jwt-utils)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/the-node-forge/jwt-utils/ci.yaml?branch=main)](https://github.com/The-Node-Forge/jwt-utils/actions)
 
 [Live Documentation](https://the-node-forge.github.io/jwt-utils/)
 
@@ -16,7 +19,11 @@ control (RBAC).**
 
 ---
 
-## ✨ Features
+**JWT Utils** is a fast, lightweight, and framework-agnostic Node.js library for
+generating, verifying, and managing JSON Web Tokens (JWTs). It simplifies
+authentication and token-based authorization for web applications and APIs.
+
+## **🚀 Features**
 
 - ✅ **Generate JWTs** – Create signed JWTs with custom payloads and expiration
   times.
@@ -28,16 +35,21 @@ control (RBAC).**
 - ✅ **RBAC Middleware** – Control access based on user roles.
 - ✅ **TypeScript Support** – Fully typed for safer development.
 - ✅ **Lightweight & Secure** – Uses `jsonwebtoken` with best security practices.
+- ✅ Generate and verify **JWTs** easily
+- ✅ Support for **Fastify, Koa, and Express** middleware
+- ✅ Framework-agnostic core utilities
+- ✅ Lightweight and **dependency-free**
+- ✅ Built-in **security best practices**
 
 ---
 
-## 📚 Installation
+## **📦 Installation**
 
 ```sh
 npm install @the-node-forge/jwt-utils
 ```
 
-or using Yarn:
+or
 
 ```sh
 yarn add @the-node-forge/jwt-utils
@@ -45,9 +57,11 @@ yarn add @the-node-forge/jwt-utils
 
 ---
 
-## 🎯 **Basic Usage**
+## **🔧 Usage**
 
 ### **Generating Access & Refresh Tokens**
+
+### **1⃣ Generate a Token**
 
 ```ts
 import { generateTokens } from '@the-node-forge/jwt-utils';
@@ -62,9 +76,14 @@ const { accessToken, refreshToken } = generateTokens(
 );
 console.log('Access Token:', accessToken);
 console.log('Refresh Token:', refreshToken);
+const token = generateToken({ id: 'user123', role: 'admin' });
+
+console.log(token);
 ```
 
 ### **Verifying Tokens**
+
+### **2⃣ Verify a Token**
 
 ```ts
 import { verifyToken, verifyRefreshToken } from '@the-node-forge/jwt-utils';
@@ -134,6 +153,15 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 
 ### **Koa Middleware**
 
+const decoded = verifyToken(token);
+
+if (decoded) { console.log('Token is valid', decoded); } else { console.log('Invalid
+token'); }
+
+````
+
+### **3⃣ Koa Middleware Example**
+
 ```ts
 import Koa from 'koa';
 import {
@@ -148,13 +176,38 @@ const refreshSecret = 'your-refresh-secret';
 app.use(authenticateToken(accessSecret));
 app.use(authenticateRefreshToken(refreshSecret));
 
+app.use(globalAuthHandler);
+
 app.use(async (ctx) => {
-  if (ctx.path === '/protected') {
-    ctx.body = { message: 'Protected route', user: ctx.state.user };
+  if (!ctx.state.user) {
+    ctx.status = 401;
+    ctx.body = { message: 'Unauthorized' };
+    return;
   }
+  ctx.body = { message: 'Protected', user: ctx.state.user };
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+app.listen(3000, () => console.log('Koa server running on port 3000'));
+````
+
+### **4⃣ Fastify Middleware Example**
+
+```ts
+import Fastify from 'fastify';
+import authenticateToken from '@the-node-forge/jwt-utils/middleware/fastify';
+
+const app = Fastify();
+
+app.addHook('onRequest', authenticateToken);
+
+app.get('/protected', async (req, reply) => {
+  if (!req.user) {
+    return reply.status(401).send({ message: 'Unauthorized' });
+  }
+  reply.send({ message: 'Protected', user: req.user });
+});
+
+app.listen({ port: 3000 }, () => console.log('Fastify server running on port 3000'));
 ```
 
 ### **Hapi Middleware**
@@ -196,22 +249,50 @@ app.get('/admin', authorizeRoles('admin'), (req, res) => {
 
 ---
 
-## 👑 **Contributing**
+## **🔒 Security Best Practices**
 
-Contributions are welcome! Please submit
-[issues](https://github.com/The-Node-Forge/jwt-utils/issues) or
-[pull requests](https://github.com/The-Node-Forge/jwt-utils/pulls).
-
----
-
-### ⭐ Support
-
-If you find this package useful, please **give it a ⭐ on**
-[GitHub](https://github.com/The-Node-Forge/jwt-utils 'GitHub Repository')
+- Always use **secure, long, randomly generated** secret keys in production.
+- Store **tokens in HTTP-only cookies** instead of local storage when possible.
+- Implement **refresh tokens** for long-term authentication.
 
 ---
 
-### 🔗 **Links**
+## **🛠️ Roadmap & Future Features**
 
-- 📚 [NPM Package](https://www.npmjs.com/package/@the-node-forge/jwt-utils)
-- 🏠 [The Node Forge](https://github.com/The-Node-Forge)
+📌 **Planned Updates:**
+
+- ✅ Add support for **Express.js middleware**
+- 🔜 Role-based access control (RBAC) middleware
+- 🔜 Refresh token implementation
+
+Want to suggest a feature? Open an
+**[issue](https://github.com/the-node-forge/jwt-utils/issues)** or **contribute**!
+
+---
+
+## **🌍 License**
+
+This project is licensed under the **MIT License**.
+
+---
+
+## **🤝 Contributing**
+
+We welcome contributions!
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature-name`)
+3. Commit your changes (`git commit -m 'Add feature'`)
+4. Push to the branch (`git push origin feature-name`)
+5. Open a pull request
+
+---
+
+## **🌟 Support & Links**
+
+- **NPM Package**:
+  [@the-node-forge/jwt-utils](https://www.npmjs.com/package/@the-node-forge/jwt-utils)
+- **GitHub Repo**:
+  [The Node Forge / JWT Utils](https://github.com/the-node-forge/jwt-utils)
+- **Issues & Feature Requests**:
+  [Open an Issue](https://github.com/the-node-forge/jwt-utils/issues)
