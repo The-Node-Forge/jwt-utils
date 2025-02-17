@@ -1,18 +1,5 @@
-/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
-
-let fastify: any;
-
-try {
-  fastify = require('fastify');
-} catch (err) {
-  throw new Error(
-    'Fastify is not installed. Please install it with: npm install fastify',
-  );
-}
-
 import { FastifyRequest, FastifyReply } from 'fastify';
-
-import { verifyToken } from '../jwt';
+import { verifyToken, verifyRefreshToken } from '../jwt';
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -20,27 +7,38 @@ declare module 'fastify' {
   }
 }
 
-export async function authenticateToken(
-  request: FastifyRequest,
-  reply: FastifyReply,
-) {
-  const authHeader = request.headers.authorization;
-  if (!authHeader) {
-    return reply.status(401).send({ message: 'Unauthorized: No token provided' });
-  }
+export function authenticateToken(accessSecret: string) {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    const authHeader = request.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return reply.status(401).send({ message: 'Unauthorized: No token provided' });
+    }
 
-  const [, token = ''] = authHeader.split(' ');
+    const token = authHeader.split(' ')[1];
+    const user = verifyToken(token, accessSecret);
 
-  if (!token) {
-    return reply.status(401).send({ message: 'Unauthorized: Invalid token format' });
-  }
+    if (!user) {
+      return reply.status(403).send({ message: 'Forbidden: Invalid token' });
+    }
 
-  const user = verifyToken(token);
-
-  if (!user) {
-    return reply.status(403).send({ message: 'Forbidden: Invalid token' });
-  }
-
-  (request as any).user = user;
+    request.user = user;
+  };
 }
-export default authenticateToken;
+
+export function authenticateRefreshToken(refreshSecret: string) {
+  return async (request: FastifyRequest, reply: FastifyReply) => {
+    const authHeader = request.headers.authorization;
+    if (!authHeader?.startsWith('Bearer ')) {
+      return reply.status(401).send({ message: 'Unauthorized: No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const user = verifyRefreshToken(token, refreshSecret);
+
+    if (!user) {
+      return reply.status(403).send({ message: 'Forbidden: Invalid refresh token' });
+    }
+
+    request.user = user;
+  };
+}

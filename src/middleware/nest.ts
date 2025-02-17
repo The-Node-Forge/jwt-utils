@@ -3,29 +3,41 @@ import {
   ExecutionContext,
   Injectable,
   UnauthorizedException,
-  ForbiddenException,
 } from '@nestjs/common';
 
-import { verifyToken } from '../jwt';
+import { verifyToken, verifyRefreshToken } from '../jwt';
 
 @Injectable()
-export class JwtAuthGuard implements CanActivate {
+export class AuthenticateToken implements CanActivate {
+  constructor(
+    private readonly accessSecret: string,
+    private readonly refreshSecret: string,
+  ) {}
+
   canActivate(context: ExecutionContext): boolean {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers.authorization;
 
-    if (!authHeader) {
-      throw new UnauthorizedException('Unauthorized');
+    if (!authHeader?.startsWith('Bearer ')) {
+      throw new UnauthorizedException(
+        'Unauthorized: No token provided or invalid format',
+      );
     }
 
-    const [, token] = authHeader.split(' ');
-    const decoded = verifyToken(token);
+    const token = authHeader.split(' ')[1];
+    let decoded;
+
+    if (request.url.includes('/refresh')) {
+      decoded = verifyRefreshToken(token, this.refreshSecret);
+    } else {
+      decoded = verifyToken(token, this.accessSecret);
+    }
 
     if (!decoded) {
-      throw new ForbiddenException('Forbidden');
+      throw new UnauthorizedException('Unauthorized: Invalid or expired token');
     }
 
-    // attach user data to request
+    // Attach user data to request
     request.user = decoded;
     return true;
   }

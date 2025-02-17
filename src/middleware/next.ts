@@ -1,24 +1,35 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { verifyToken, verifyRefreshToken } from '../jwt';
 
-import { verifyToken } from '../jwt';
-
-export function withAuth(
+export function authenticateToken(
   handler: (req: NextApiRequest, res: NextApiResponse) => void,
+  accessSecret: string,
+  refreshSecret: string,
+  allowRefreshToken: boolean = false,
 ) {
   return (req: NextApiRequest, res: NextApiResponse) => {
     const authHeader = req.headers.authorization;
-    if (!authHeader) {
-      return res.status(401).json({ message: 'Unauthorized' });
+    if (!authHeader?.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
 
-    const [, token] = authHeader.split(' ');
-    const decoded = verifyToken(token);
+    const token = authHeader.split(' ')[1];
+    let decoded;
+
+    if (allowRefreshToken) {
+      decoded = verifyRefreshToken(token, refreshSecret);
+    } else {
+      decoded = verifyToken(token, accessSecret);
+    }
+
     if (!decoded) {
-      return res.status(403).json({ message: 'Forbidden' });
+      return res
+        .status(401)
+        .json({ message: 'Unauthorized: Invalid or expired token' });
     }
 
-    // attach user data to request
-    req.user = decoded as { id: string; role: string };
+    // Attach user data to request
+    (req as any).user = decoded;
     return handler(req, res);
   };
 }

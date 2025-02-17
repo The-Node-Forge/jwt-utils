@@ -31,9 +31,9 @@ describe('RBAC Middleware', () => {
   test('❌ Denies access if user is missing', () => {
     mockReq.user = undefined;
     authorizeRoles('admin')(mockReq as Request, mockRes as Response, next);
-    expect(mockRes.status).toHaveBeenCalledWith(403);
+    expect(mockRes.status).toHaveBeenCalledWith(401);
     expect(mockRes.json).toHaveBeenCalledWith({
-      message: 'Forbidden: Insufficient Permissions',
+      message: 'Unauthorized: No user data found',
     });
     expect(next).not.toHaveBeenCalled();
   });
