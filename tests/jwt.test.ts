@@ -43,7 +43,7 @@ describe('JWT Utility Functions', () => {
 
   test('should return null for an expired access token', () => {
     const { accessToken } = generateTokens(payload, accessSecret, refreshSecret);
-    jest.useFakeTimers().setSystemTime(Date.now() + 16 * 60 * 1000); // FF 16 minutes
+    jest.useFakeTimers().setSystemTime(Date.now() + 16 * 60 * 1000); // fastforward 16 minutes
     const decoded = verifyToken(accessToken, accessSecret);
     expect(decoded).toBeNull();
     jest.useRealTimers();
@@ -51,7 +51,7 @@ describe('JWT Utility Functions', () => {
 
   test('should return null for an expired refresh token', () => {
     const { refreshToken } = generateTokens(payload, accessSecret, refreshSecret);
-    jest.useFakeTimers().setSystemTime(Date.now() + 8 * 24 * 60 * 60 * 1000); // FF 8 days
+    jest.useFakeTimers().setSystemTime(Date.now() + 8 * 24 * 60 * 60 * 1000); // fastforward 8 days
     const decoded = verifyRefreshToken(refreshToken, refreshSecret);
     expect(decoded).toBeNull();
     jest.useRealTimers();

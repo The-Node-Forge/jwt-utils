@@ -37,7 +37,6 @@ export class AuthenticateToken implements CanActivate {
       throw new UnauthorizedException('Unauthorized: Invalid or expired token');
     }
 
-    // Attach user data to request
     request.user = decoded;
     return true;
   }

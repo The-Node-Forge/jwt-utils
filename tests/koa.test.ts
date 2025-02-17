@@ -73,7 +73,7 @@ describe('Koa Middleware: authenticateToken & authenticateRefreshToken', () => {
       .get('/refresh')
       .set('Authorization', `Bearer ${refreshToken}`);
 
-    expect(response.status).toBe(200); // ✅ Ensure correct status code
+    expect(response.status).toBe(200);
     expect(response.body.user.id).toBe('test-user');
   });
 
@@ -87,7 +87,7 @@ describe('Koa Middleware: authenticateToken & authenticateRefreshToken', () => {
       .get('/protected')
       .set('Authorization', 'Bearer invalid_token');
 
-    expect(response.status).toBe(403); // ✅ Should be 403 Forbidden
+    expect(response.status).toBe(403);
   });
 
   test('❌ Rejects access with invalid refresh token', async () => {
@@ -95,7 +95,7 @@ describe('Koa Middleware: authenticateToken & authenticateRefreshToken', () => {
       .get('/refresh')
       .set('Authorization', 'Bearer invalid_token');
 
-    expect(response.status).toBe(403); // ✅ Should be 403 Forbidden
+    expect(response.status).toBe(403);
   });
 
   test('✅ Returns 404 for unknown routes', async () => {

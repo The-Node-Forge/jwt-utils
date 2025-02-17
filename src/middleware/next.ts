@@ -28,7 +28,6 @@ export function authenticateToken(
         .json({ message: 'Unauthorized: Invalid or expired token' });
     }
 
-    // Attach user data to request
     (req as any).user = decoded;
     return handler(req, res);
   };

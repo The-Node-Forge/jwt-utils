@@ -3,7 +3,7 @@ import { verifyToken, verifyRefreshToken } from '../jwt';
 
 export function authenticateToken(accessSecret: string) {
   return async (ctx: Context, next: Next) => {
-    // Skip authentication for unknown routes
+    // skip auth for unknown routes
     if (ctx.path !== '/protected') {
       await next();
       return;
@@ -20,13 +20,13 @@ export function authenticateToken(accessSecret: string) {
     const user = verifyToken(token, accessSecret);
 
     if (!user) {
-      ctx.status = 403; // Invalid token should return Forbidden
+      ctx.status = 403;
       ctx.body = { message: 'Forbidden: Invalid or expired token' };
       return;
     }
 
     ctx.state.user = user;
-    await next(); // Allow protected route to execute
+    await next();
   };
 }
 
@@ -48,13 +48,13 @@ export function authenticateRefreshToken(refreshSecret: string) {
     const user = verifyRefreshToken(token, refreshSecret);
 
     if (!user) {
-      ctx.status = 403; // Invalid refresh token should return Forbidden
+      ctx.status = 403;
       ctx.body = { message: 'Forbidden: Invalid or expired refresh token' };
       return;
     }
 
     ctx.state.user = user;
-    ctx.status = 200; // ✅ Ensure response status is set to 200 for refresh
+    ctx.status = 200;
     await next();
   };
 }
