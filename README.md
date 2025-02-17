@@ -153,6 +153,7 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 
 ### **Koa Middleware**
 
+```ts
 const decoded = verifyToken(token);
 
 if (decoded) { console.log('Token is valid', decoded); } else { console.log('Invalid
@@ -160,7 +161,7 @@ token'); }
 
 ````
 
-### **3⃣ Koa Middleware Example**
+### ** Koa Middleware Example**
 
 ```ts
 import Koa from 'koa';
@@ -190,7 +191,7 @@ app.use(async (ctx) => {
 app.listen(3000, () => console.log('Koa server running on port 3000'));
 ````
 
-### **4⃣ Fastify Middleware Example**
+### ** Fastify Middleware Example**
 
 ```ts
 import Fastify from 'fastify';
