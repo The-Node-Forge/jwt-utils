@@ -1,4 +1,5 @@
 import { Context, Next } from 'koa';
+
 import { verifyToken, verifyRefreshToken } from '../jwt';
 
 export function authenticateToken(accessSecret: string) {
@@ -16,7 +17,7 @@ export function authenticateToken(accessSecret: string) {
       return;
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     const user = verifyToken(token, accessSecret);
 
     if (!user) {
@@ -44,7 +45,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
       return;
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     const user = verifyRefreshToken(token, refreshSecret);
 
     if (!user) {

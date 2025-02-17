@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 import { verifyToken, verifyRefreshToken } from '../jwt';
 
 export function authenticateToken(
@@ -13,7 +14,7 @@ export function authenticateToken(
       return res.status(401).json({ message: 'Unauthorized: No token provided' });
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     let decoded;
 
     if (allowRefreshToken) {

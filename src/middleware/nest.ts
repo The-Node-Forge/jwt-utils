@@ -24,7 +24,7 @@ export class AuthenticateToken implements CanActivate {
       );
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     let decoded;
 
     if (request.url.includes('/refresh')) {

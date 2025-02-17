@@ -1,4 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
+
 import { verifyToken, verifyRefreshToken } from '../jwt';
 
 declare module 'fastify' {
@@ -14,7 +15,7 @@ export function authenticateToken(accessSecret: string) {
       return reply.status(401).send({ message: 'Unauthorized: No token provided' });
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     const user = verifyToken(token, accessSecret);
 
     if (!user) {
@@ -32,7 +33,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
       return reply.status(401).send({ message: 'Unauthorized: No token provided' });
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     const user = verifyRefreshToken(token, refreshSecret);
 
     if (!user) {

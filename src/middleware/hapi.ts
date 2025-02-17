@@ -1,4 +1,5 @@
 import { Request, ResponseToolkit, Lifecycle } from '@hapi/hapi';
+
 import { verifyToken, verifyRefreshToken } from '../jwt';
 
 declare module '@hapi/hapi' {
@@ -20,7 +21,7 @@ export function authenticateToken(accessSecret: string) {
         .code(401);
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
 
     if (!token) {
       return h.response({ message: 'Unauthorized: Missing token' }).code(401);
@@ -52,7 +53,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
         .code(401);
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
 
     if (!token) {
       return h.response({ message: 'Unauthorized: Missing token' }).code(401);

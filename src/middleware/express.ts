@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express';
+
 import { verifyToken, verifyRefreshToken } from '../jwt';
 
 export const authenticateToken = (accessSecret: string): RequestHandler => {
@@ -9,7 +10,7 @@ export const authenticateToken = (accessSecret: string): RequestHandler => {
       return;
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     const user = verifyToken(token, accessSecret);
 
     if (!user) {
@@ -30,7 +31,7 @@ export const authenticateRefreshToken = (refreshSecret: string): RequestHandler 
       return;
     }
 
-    const token = authHeader.split(' ')[1];
+    const [, token] = authHeader.split(' ');
     const user = verifyRefreshToken(token, refreshSecret);
 
     if (!user) {
