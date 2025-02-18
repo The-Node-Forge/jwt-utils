@@ -1,9 +1,4 @@
-export {
-  generateTokens,
-  verifyToken,
-  verifyRefreshToken,
-  revokeRefreshToken,
-} from './jwt';
+export { generateTokens, verifyToken, verifyRefreshToken } from './jwt';
 export { authenticateToken as hapiAuth } from './middleware/hapi';
 export { authenticateToken as nextAuth } from './middleware/next';
 export { AuthenticateToken as nestAuth } from './middleware/nest';

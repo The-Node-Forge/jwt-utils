@@ -81,7 +81,7 @@ if (decoded) {
 | Parameter   | Type                | Description                                                                |
 | ----------- | ------------------- | -------------------------------------------------------------------------- |
 | `payload`   | `object`            | The data to include in the JWT payload.                                    |
-| `expiresIn` | `string` (optional) | Token expiration time (e.g., `'1h'`, `'30m'`, `'7d'`). Defaults to `'1h'`. |
+| `expiresIn` | `string` (optional) | Token expiration time (e.g., `'1h'`, `'30m'`, `'1d'`). Defaults to `'1h'`. |
 
 ---
 

@@ -3,8 +3,9 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'The Node Forge', // Edit
-  tagline: 'Lightweight NPM Packages Made Easy', // Edit
+  title: 'The Node Forge',
+  tagline:
+    'A flexible, lightweight Node.js JWT library for generating, verifying, and managing JSON Web Tokens (JWTs). Supports access and refresh tokens with customizable secrets for authentication and role-based access control. Includes middleware for Express, Fastify, Koa, Hapi, NestJS, and Next.js to streamline authentication in modern web applications.',
   favicon: 'img/favicon.ico',
 
   url: 'https://the-node-forge.github.io',
@@ -52,7 +53,7 @@ const config: Config = {
   themeConfig: {
     image: 'img/theNodeForge.png', // Edit
     navbar: {
-      title: 'The Node Forge', // Your Package Name
+      title: 'jwt-utils', // Your Package Name
       logo: {
         alt: 'The Node Forge Logo', // edit
         src: 'img/theNodeForge.png', // Your Logo

@@ -65,7 +65,7 @@ JWT expiration can be configured in seconds, minutes, hours, or days:
 ```json
 {
   "accessExpiresIn": "15m",
-  "refreshExpiresIn": "7d"
+  "refreshExpiresIn": "1d"
 }
 ```
 
