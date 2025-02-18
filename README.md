@@ -1,6 +1,7 @@
 <div align="center">
 
-# JWT Utils – Lightweight JWT Authentication for Node.js
+# JWT Utils 
+## Lightweight JWT Authentication for Node.js
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
