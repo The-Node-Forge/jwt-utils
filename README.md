@@ -153,14 +153,15 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 
 ### **Koa Middleware**
 
+```ts
 const decoded = verifyToken(token);
 
 if (decoded) { console.log('Token is valid', decoded); } else { console.log('Invalid
 token'); }
 
-````
+```
 
-### **3⃣ Koa Middleware Example**
+### ** Koa Middleware Example**
 
 ```ts
 import Koa from 'koa';
@@ -188,9 +189,9 @@ app.use(async (ctx) => {
 });
 
 app.listen(3000, () => console.log('Koa server running on port 3000'));
-````
+```
 
-### **4⃣ Fastify Middleware Example**
+### ** Fastify Middleware Example**
 
 ```ts
 import Fastify from 'fastify';
@@ -257,19 +258,6 @@ app.get('/admin', authorizeRoles('admin'), (req, res) => {
 
 ---
 
-## **🛠️ Roadmap & Future Features**
-
-📌 **Planned Updates:**
-
-- ✅ Add support for **Express.js middleware**
-- 🔜 Role-based access control (RBAC) middleware
-- 🔜 Refresh token implementation
-
-Want to suggest a feature? Open an
-**[issue](https://github.com/the-node-forge/jwt-utils/issues)** or **contribute**!
-
----
-
 ## **🌍 License**
 
 This project is licensed under the **MIT License**.
@@ -277,6 +265,9 @@ This project is licensed under the **MIT License**.
 ---
 
 ## **🤝 Contributing**
+
+Want to suggest a feature? Open an
+**[issue](https://github.com/the-node-forge/jwt-utils/issues)** or **contribute**!
 
 We welcome contributions!
 
