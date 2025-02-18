@@ -11,7 +11,7 @@ export function generateTokens(
   refreshSecret: string,
 ) {
   const accessToken = jwt.sign(payload, accessSecret, { expiresIn: '15m' });
-  const refreshToken = jwt.sign(payload, refreshSecret, { expiresIn: '7d' });
+  const refreshToken = jwt.sign(payload, refreshSecret, { expiresIn: '1d' });
 
   return { accessToken, refreshToken };
 }
@@ -32,10 +32,4 @@ export function verifyRefreshToken(token: string, refreshSecret: string) {
     console.error('❌ JWT Refresh Token Verification Error:', err.message);
     return null;
   }
-}
-
-// Optionally revoke a refresh token (if storing refresh tokens in a database)
-export function revokeRefreshToken(token: string) {
-  // Example: Store invalidated tokens in a database or cache
-  console.warn('⚠️ Refresh token revoked:', token);
 }

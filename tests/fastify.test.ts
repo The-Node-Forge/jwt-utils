@@ -1,44 +1,53 @@
-import express from 'express';
+import Fastify from 'fastify';
 import request from 'supertest';
 
 import { generateTokens, verifyToken, verifyRefreshToken } from '../src/jwt';
 import {
   authenticateToken,
   authenticateRefreshToken,
-} from '../src/middleware/express';
+} from '../src/middleware/fastify';
 
 const accessSecret = 'test-access-secret';
 const refreshSecret = 'test-refresh-secret';
 
-const app = express();
-app.use(express.json());
+const fastify = Fastify();
 
-app.get('/protected', authenticateToken(accessSecret), (req: any, res: any) => {
-  res.json({ message: 'Protected', user: req.user });
-});
-
-app.get(
-  '/refresh',
-  authenticateRefreshToken(refreshSecret),
-  (req: any, res: any) => {
-    res.json({ message: 'Refresh Token Valid', user: req.user });
+fastify.get(
+  '/protected',
+  { preHandler: authenticateToken(accessSecret) },
+  async (req, reply) => {
+    return reply.send({ message: 'Protected', user: req.user });
   },
 );
 
-describe('Express Middleware: authenticateToken & authenticateRefreshToken', () => {
+fastify.get(
+  '/refresh',
+  { preHandler: authenticateRefreshToken(refreshSecret) },
+  async (req, reply) => {
+    return reply.send({ message: 'Refresh Token Valid', user: req.user });
+  },
+);
+
+describe('Fastify Middleware: authenticateToken & authenticateRefreshToken', () => {
   let accessToken: string;
   let refreshToken: string;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     ({ accessToken, refreshToken } = generateTokens(
       { id: 'test-user', role: 'admin' },
       accessSecret,
       refreshSecret,
     ));
+
+    await fastify.ready(); // Ensure Fastify is ready before running tests
+  });
+
+  afterAll(async () => {
+    await fastify.close(); // Properly close Fastify after tests
   });
 
   test('✅ Allows access with valid access token', async () => {
-    const response = await request(app)
+    const response = await request(fastify.server)
       .get('/protected')
       .set('Authorization', `Bearer ${accessToken}`);
 
@@ -47,7 +56,7 @@ describe('Express Middleware: authenticateToken & authenticateRefreshToken', () 
   });
 
   test('✅ Allows access with valid refresh token', async () => {
-    const response = await request(app)
+    const response = await request(fastify.server)
       .get('/refresh')
       .set('Authorization', `Bearer ${refreshToken}`);
 
@@ -56,12 +65,12 @@ describe('Express Middleware: authenticateToken & authenticateRefreshToken', () 
   });
 
   test('❌ Rejects access with missing token', async () => {
-    const response = await request(app).get('/protected');
+    const response = await request(fastify.server).get('/protected');
     expect(response.status).toBe(401);
   });
 
   test('❌ Rejects access with invalid access token', async () => {
-    const response = await request(app)
+    const response = await request(fastify.server)
       .get('/protected')
       .set('Authorization', 'Bearer invalid_token');
 
@@ -69,7 +78,7 @@ describe('Express Middleware: authenticateToken & authenticateRefreshToken', () 
   });
 
   test('❌ Rejects access with invalid refresh token', async () => {
-    const response = await request(app)
+    const response = await request(fastify.server)
       .get('/refresh')
       .set('Authorization', 'Bearer invalid_token');
 
