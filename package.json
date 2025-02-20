@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A flexible, lightweight Node.js JWT library for generating, verifying, and managing JSON Web Tokens (JWTs). Supports access and refresh tokens with customizable secrets for authentication and role-based access control. Includes middleware for Express, Fastify, Koa, Hapi, NestJS, and Next.js to streamline authentication in modern web applications.",
   "main": "src/index.ts",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
