@@ -4,36 +4,36 @@
   "description": "A flexible, lightweight Node.js JWT library for generating, verifying, and managing JSON Web Tokens (JWTs). Supports access and refresh tokens with customizable secrets for authentication and role-based access control. Includes middleware for Express, Fastify, Koa, Hapi, NestJS, and Next.js to streamline authentication in modern web applications.",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
+      "import": "./dist/mjs/index.mjs",
+      "require": "./dist/cjs/index.js"
     },
     "./middleware/express": {
-      "import": "./dist/middleware/express.mjs",
-      "require": "./dist/middleware/express.js"
+      "import": "./dist/mjs/middleware/express.mjs",
+      "require": "./dist/cjs/middleware/express.js"
     },
     "./middleware/fastify": {
-      "import": "./dist/middleware/fastify.mjs",
-      "require": "./dist/middleware/fastify.js"
+      "import": "./dist/mjs/middleware/fastify.mjs",
+      "require": "./dist/cjs/middleware/fastify.js"
     },
     "./middleware/koa": {
-      "import": "./dist/middleware/koa.mjs",
-      "require": "./dist/middleware/koa.js"
+      "import": "./dist/mjs/middleware/koa.mjs",
+      "require": "./dist/cjs/middleware/koa.js"
     },
     "./middleware/hapi": {
-      "import": "./dist/middleware/hapi.mjs",
-      "require": "./dist/middleware/hapi.js"
+      "import": "./dist/mjs/middleware/hapi.mjs",
+      "require": "./dist/cjs/middleware/hapi.js"
     },
     "./middleware/next": {
-      "import": "./dist/middleware/next.mjs",
-      "require": "./dist/middleware/next.js"
+      "import": "./dist/mjs/middleware/next.mjs",
+      "require": "./dist/cjs/middleware/next.js"
     },
     "./middleware/nest": {
-      "import": "./dist/middleware/nest.mjs",
-      "require": "./dist/middleware/nest.js"
+      "import": "./dist/mjs/middleware/nest.mjs",
+      "require": "./dist/cjs/middleware/nest.js"
     },
     "./middleware/rbac": {
-      "import": "./dist/middleware/rbac.mjs",
-      "require": "./dist/middleware/rbac.js"
+      "import": "./dist/mjs/middleware/rbac.mjs",
+      "require": "./dist/cjs/middleware/rbac.js"
     }
   },
   "main": "dist/cjs/index.cjs",
