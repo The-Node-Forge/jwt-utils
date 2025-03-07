@@ -78,7 +78,7 @@ const { accessToken, refreshToken } = generateTokens(
 );
 console.log('Access Token:', accessToken);
 console.log('Refresh Token:', refreshToken);
-const token = generateToken({ id: 'user123', role: 'admin' });
+const token = generateTokens({ id: 'user123', role: 'admin' });
 
 console.log(token);
 ```

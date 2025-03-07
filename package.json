@@ -2,8 +2,13 @@
   "name": "@the-node-forge/jwt-utils",
   "version": "1.0.0",
   "description": "A flexible, lightweight Node.js JWT library for generating, verifying, and managing JSON Web Tokens (JWTs). Supports access and refresh tokens with customizable secrets for authentication and role-based access control. Includes middleware for Express, Fastify, Koa, Hapi, NestJS, and Next.js to streamline authentication in modern web applications.",
-  "main": "src/index.ts",
-  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/mjs/index.mjs",
+    "require": "./dist/cjs/index.cjs"
+  },
+  "main": "dist/cjs/index.cjs",
+  "module": "dist/mjs/index.mjs",
+  "types": "dist/mjs/index.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
@@ -13,7 +18,10 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepublishOnly": "npm run build",
-    "build": "tsc",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && npm run build:cjs && npm run build:mjs",
+    "build:cjs": "tsc --project tsconfig.cjs.json && find dist/cjs -name '*.js' -exec sh -c 'cp \"$1\" \"${1%.js}.cjs\"' _ {} \\; && find dist/cjs -name '*.d.ts' -exec sh -c 'mv \"$1\" \"${1%.d.ts}.d.cts\"' _ {} \\;",
+    "build:mjs": "tsc --project tsconfig.mjs.json && find dist/mjs -name '*.js' -exec sh -c 'cp \"$1\" \"${1%.js}.mjs\"' _ {} \\; && find dist/mjs -name '*.d.ts' -exec sh -c 'mv \"$1\" \"${1%.d.ts}.d.mts\"' _ {} \\;",
     "docs:generate": "typedoc --plugin typedoc-plugin-markdown --out docs/api src/index.ts",
     "docs:build": "npm run docs:generate && cd docs && npm run build",
     "docs:start": "npm run docs:generate && cd docs && npm start",
