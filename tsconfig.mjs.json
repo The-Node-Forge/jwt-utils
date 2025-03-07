@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "NodeNext",
+    "outDir": "dist/mjs",
+    "declarationDir": "dist/mjs"
+  },
+  "include": ["src/**/*.ts"]
+}
