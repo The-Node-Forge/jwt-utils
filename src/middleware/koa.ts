@@ -1,10 +1,26 @@
-import { Context, Next } from 'koa';
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
-import { verifyToken, verifyRefreshToken } from '../jwt';
+let koa: any;
+let verifyToken: any;
+let verifyRefreshToken: any;
 
 export function authenticateToken(accessSecret: string) {
-  return async (ctx: Context, next: Next) => {
-    // skip auth for unknown routes
+  if (!koa) {
+    try {
+      koa = require('koa');
+    } catch (error) {
+      throw new Error(
+        "Koa middleware is being used, but 'koa' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyToken) {
+    ({ verifyToken } = require('../jwt'));
+  }
+
+  return async (ctx: any, next: any) => {
+    // Skip auth for unknown routes
     if (ctx.path !== '/protected') {
       await next();
       return;
@@ -32,7 +48,21 @@ export function authenticateToken(accessSecret: string) {
 }
 
 export function authenticateRefreshToken(refreshSecret: string) {
-  return async (ctx: Context, next: Next) => {
+  if (!koa) {
+    try {
+      koa = require('koa');
+    } catch (error) {
+      throw new Error(
+        "Koa middleware is being used, but 'koa' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyRefreshToken) {
+    ({ verifyRefreshToken } = require('../jwt'));
+  }
+
+  return async (ctx: any, next: any) => {
     if (ctx.path !== '/refresh') {
       await next();
       return;
