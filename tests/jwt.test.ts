@@ -1,9 +1,23 @@
 import { generateTokens, verifyToken, verifyRefreshToken } from '../src/jwt';
+import { Algorithm } from 'jsonwebtoken';
 
 describe('JWT Utility Functions', () => {
   const payload = { id: '12345', role: 'admin' };
   const accessSecret = 'test-access-secret';
   const refreshSecret = 'test-refresh-secret';
+  const signOptions: {
+    accessExpiresIn: string;
+    refreshExpiresIn: string;
+    algorithm: Algorithm;
+    audience: string;
+    issuer: string;
+  } = {
+    accessExpiresIn: '1h',
+    refreshExpiresIn: '7d',
+    algorithm: 'HS256',
+    audience: 'my-app',
+    issuer: 'auth-service',
+  };
 
   let accessToken: string;
   let refreshToken: string;
@@ -13,6 +27,7 @@ describe('JWT Utility Functions', () => {
       payload,
       accessSecret,
       refreshSecret,
+      signOptions,
     ));
   });
 
@@ -21,11 +36,15 @@ describe('JWT Utility Functions', () => {
     expect(typeof refreshToken).toBe('string');
   });
 
-  test('should generate tokens with custom expiration times', () => {
+  test('should generate tokens with custom expiration and sign options', () => {
     const customTokens = generateTokens(payload, accessSecret, refreshSecret, {
-      accessExpiresIn: '1h',
-      refreshExpiresIn: '2d',
+      accessExpiresIn: '2h',
+      refreshExpiresIn: '10d',
+      algorithm: 'HS512',
+      audience: 'custom-app',
+      issuer: 'custom-service',
     });
+
     expect(typeof customTokens.accessToken).toBe('string');
     expect(typeof customTokens.refreshToken).toBe('string');
   });
@@ -68,5 +87,29 @@ describe('JWT Utility Functions', () => {
     const decoded = verifyRefreshToken(refreshToken, refreshSecret);
     expect(decoded).toBeNull();
     jest.useRealTimers();
+  });
+
+  test('should fail verification when audience does not match', () => {
+    const mismatchedToken = generateTokens(payload, accessSecret, refreshSecret, {
+      ...signOptions,
+      audience: 'wrong-app',
+    }).accessToken;
+
+    const decoded = verifyToken(mismatchedToken, accessSecret, {
+      audience: 'my-app',
+    });
+    expect(decoded).toBeNull();
+  });
+
+  test('should fail verification when issuer does not match', () => {
+    const mismatchedToken = generateTokens(payload, accessSecret, refreshSecret, {
+      ...signOptions,
+      issuer: 'wrong-service',
+    }).accessToken;
+
+    const decoded = verifyToken(mismatchedToken, accessSecret, {
+      issuer: 'auth-service',
+    });
+    expect(decoded).toBeNull();
   });
 });
