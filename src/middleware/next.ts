@@ -1,14 +1,33 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
-import { verifyToken, verifyRefreshToken } from '../jwt';
+let next: any;
+let verifyToken: any;
+let verifyRefreshToken: any;
 
 export function authenticateToken(
-  handler: (req: NextApiRequest, res: NextApiResponse) => void,
+  handler: (req: any, res: any) => void,
   accessSecret: string,
   refreshSecret: string,
   allowRefreshToken: boolean = false,
 ) {
-  return (req: NextApiRequest, res: NextApiResponse) => {
+  if (!next) {
+    try {
+      next = require('next');
+    } catch (error) {
+      throw new Error(
+        "Next.js middleware is being used, but 'next' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyToken) {
+    ({ verifyToken } = require('../jwt'));
+  }
+  if (!verifyRefreshToken) {
+    ({ verifyRefreshToken } = require('../jwt'));
+  }
+
+  return (req: any, res: any) => {
     const authHeader = req.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       return res.status(401).json({ message: 'Unauthorized: No token provided' });
@@ -29,7 +48,7 @@ export function authenticateToken(
         .json({ message: 'Unauthorized: Invalid or expired token' });
     }
 
-    (req as any).user = decoded;
+    req.user = decoded;
     return handler(req, res);
   };
 }

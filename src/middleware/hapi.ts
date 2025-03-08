@@ -1,6 +1,10 @@
-import { Request, ResponseToolkit, Lifecycle } from '@hapi/hapi';
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
-import { verifyToken, verifyRefreshToken } from '../jwt';
+import type { Request, ResponseToolkit, Lifecycle } from '@hapi/hapi';
+
+let hapi: any;
+let verifyToken: any;
+let verifyRefreshToken: any;
 
 declare module '@hapi/hapi' {
   interface RequestApplicationState {
@@ -9,6 +13,20 @@ declare module '@hapi/hapi' {
 }
 
 export function authenticateToken(accessSecret: string) {
+  if (!hapi) {
+    try {
+      hapi = require('@hapi/hapi');
+    } catch (error) {
+      throw new Error(
+        "Hapi middleware is being used, but '@hapi/hapi' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyToken) {
+    ({ verifyToken } = require('../jwt'));
+  }
+
   return async (
     request: Request,
     h: ResponseToolkit,
@@ -29,7 +47,7 @@ export function authenticateToken(accessSecret: string) {
 
     const decoded = verifyToken(token, accessSecret);
 
-    if (decoded === null) {
+    if (!decoded) {
       return h
         .response({ message: 'Forbidden: Invalid or expired token' })
         .code(403);
@@ -41,6 +59,20 @@ export function authenticateToken(accessSecret: string) {
 }
 
 export function authenticateRefreshToken(refreshSecret: string) {
+  if (!hapi) {
+    try {
+      hapi = require('@hapi/hapi');
+    } catch (error) {
+      throw new Error(
+        "Hapi middleware is being used, but '@hapi/hapi' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyRefreshToken) {
+    ({ verifyRefreshToken } = require('../jwt'));
+  }
+
   return async (
     request: Request,
     h: ResponseToolkit,
@@ -61,7 +93,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
 
     const decoded = verifyRefreshToken(token, refreshSecret);
 
-    if (decoded === null) {
+    if (!decoded) {
       return h
         .response({ message: 'Forbidden: Invalid or expired refresh token' })
         .code(403);

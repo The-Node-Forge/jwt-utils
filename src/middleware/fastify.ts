@@ -1,6 +1,10 @@
-import { FastifyRequest, FastifyReply } from 'fastify';
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
-import { verifyToken, verifyRefreshToken } from '../jwt';
+import type { FastifyRequest } from 'fastify';
+
+let fastify: any;
+let verifyToken: any;
+let verifyRefreshToken: any;
 
 declare module 'fastify' {
   interface FastifyRequest {
@@ -9,7 +13,21 @@ declare module 'fastify' {
 }
 
 export function authenticateToken(accessSecret: string) {
-  return async (request: FastifyRequest, reply: FastifyReply) => {
+  if (!fastify) {
+    try {
+      fastify = require('fastify');
+    } catch (error) {
+      throw new Error(
+        "Fastify middleware is being used, but 'fastify' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyToken) {
+    ({ verifyToken } = require('../jwt'));
+  }
+
+  return async (request: FastifyRequest, reply: any) => {
     const authHeader = request.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       return reply.status(401).send({ message: 'Unauthorized: No token provided' });
@@ -27,7 +45,21 @@ export function authenticateToken(accessSecret: string) {
 }
 
 export function authenticateRefreshToken(refreshSecret: string) {
-  return async (request: FastifyRequest, reply: FastifyReply) => {
+  if (!fastify) {
+    try {
+      fastify = require('fastify');
+    } catch (error) {
+      throw new Error(
+        "Fastify middleware is being used, but 'fastify' is not installed. Please install it as a peer dependency.",
+      );
+    }
+  }
+
+  if (!verifyRefreshToken) {
+    ({ verifyRefreshToken } = require('../jwt'));
+  }
+
+  return async (request: FastifyRequest, reply: any) => {
     const authHeader = request.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       return reply.status(401).send({ message: 'Unauthorized: No token provided' });
