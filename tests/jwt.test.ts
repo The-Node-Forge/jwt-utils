@@ -21,6 +21,15 @@ describe('JWT Utility Functions', () => {
     expect(typeof refreshToken).toBe('string');
   });
 
+  test('should generate tokens with custom expiration times', () => {
+    const customTokens = generateTokens(payload, accessSecret, refreshSecret, {
+      accessExpiresIn: '1h',
+      refreshExpiresIn: '2d',
+    });
+    expect(typeof customTokens.accessToken).toBe('string');
+    expect(typeof customTokens.refreshToken).toBe('string');
+  });
+
   test('should verify a valid access token', () => {
     const decoded = verifyToken(accessToken, accessSecret);
     expect(decoded).toMatchObject(payload);
@@ -42,16 +51,20 @@ describe('JWT Utility Functions', () => {
   });
 
   test('should return null for an expired access token', () => {
-    const { accessToken } = generateTokens(payload, accessSecret, refreshSecret);
-    jest.useFakeTimers().setSystemTime(Date.now() + 16 * 60 * 1000); // fastforward 16 minutes
+    const { accessToken } = generateTokens(payload, accessSecret, refreshSecret, {
+      accessExpiresIn: '15s',
+    });
+    jest.useFakeTimers().setSystemTime(Date.now() + 16 * 1000);
     const decoded = verifyToken(accessToken, accessSecret);
     expect(decoded).toBeNull();
     jest.useRealTimers();
   });
 
   test('should return null for an expired refresh token', () => {
-    const { refreshToken } = generateTokens(payload, accessSecret, refreshSecret);
-    jest.useFakeTimers().setSystemTime(Date.now() + 8 * 24 * 60 * 60 * 1000); // fastforward 8 days
+    const { refreshToken } = generateTokens(payload, accessSecret, refreshSecret, {
+      refreshExpiresIn: '1h',
+    });
+    jest.useFakeTimers().setSystemTime(Date.now() + 61 * 60 * 1000);
     const decoded = verifyRefreshToken(refreshToken, refreshSecret);
     expect(decoded).toBeNull();
     jest.useRealTimers();
