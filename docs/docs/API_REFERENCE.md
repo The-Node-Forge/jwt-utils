@@ -23,7 +23,7 @@ secrets.
 
 ### **Examples:**
 
-### **1⃣ Generate a Token**
+### **1⃣ Generate a Token (no options)**
 
 ```ts
 import { generateTokens } from '@the-node-forge/jwt-utils';
@@ -43,6 +43,26 @@ const token = generateTokens({ id: 'user123', role: 'admin' });
 console.log(token);
 ```
 
+### ** Generate a Token (custom options)**
+
+```ts
+const { accessToken, refreshToken } = generateTokens(
+  { id: 'user123', role: 'admin' },
+  accessSecret,
+  refreshSecret,
+  {
+    accessExpiresIn: '1h', // Custom access token expiry
+    refreshExpiresIn: '7d', // Custom refresh token expiry
+    algorithm: 'HS512', // Stronger algorithm
+    audience: 'my-app',
+    issuer: 'my-auth-service',
+  },
+);
+
+console.log('Access Token:', accessToken);
+console.log('Refresh Token:', refreshToken);
+```
+
 ### **Verifying Tokens**
 
 ### **2⃣ Verify a Token**
@@ -50,8 +70,20 @@ console.log(token);
 ```ts
 import { verifyToken, verifyRefreshToken } from '@the-node-forge/jwt-utils';
 
+// no options
 const decodedAccess = verifyToken(accessToken, accessSecret);
 const decodedRefresh = verifyRefreshToken(refreshToken, refreshSecret);
+
+// custom options
+const decodedAccess = verifyToken(accessToken, accessSecret, {
+  audience: 'my-app',
+  issuer: 'auth-service',
+});
+
+const decodedRefresh = verifyRefreshToken(refreshToken, refreshSecret, {
+  audience: 'my-app',
+  issuer: 'auth-service',
+});
 
 console.log('Decoded Access Token:', decodedAccess);
 console.log('Decoded Refresh Token:', decodedRefresh);

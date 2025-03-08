@@ -127,9 +127,30 @@ const decodedRefresh = verifyRefreshToken(refreshToken, refreshSecret, {
 
 console.log('Decoded Access Token:', decodedAccess);
 console.log('Decoded Refresh Token:', decodedRefresh);
+```
 
-console.log('Decoded Access Token:', decodedAccess);
-console.log('Decoded Refresh Token:', decodedRefresh);
+### Verifying a Refresh Token
+
+```ts
+import { verifyRefreshToken } from '@the-node-forge/jwt-utils';
+
+const refreshToken = 'your_refresh_jwt_token_here';
+const refreshSecret = 'your-refresh-secret';
+
+// no options
+const decoded = verifyRefreshToken(refreshToken, refreshSecret);
+
+// custom options
+const decoded = verifyRefreshToken(refreshToken, refreshSecret, {
+  audience: 'my-app',
+  issuer: 'auth-service',
+});
+
+if (decoded) {
+  console.log('Refresh token is valid:', decoded);
+} else {
+  console.log('Invalid or expired refresh token');
+}
 ```
 
 ---
