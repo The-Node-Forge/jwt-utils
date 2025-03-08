@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1741402035512" clover="3.2.0">
-  <project timestamp="1741402035513" name="All files">
-    <metrics statements="229" coveredstatements="201" conditionals="57" coveredconditionals="46" methods="25" coveredmethods="25" elements="311" coveredelements="272" complexity="0" loc="229" ncloc="229" packages="2" files="8" classes="8"/>
+<coverage generated="1741405228007" clover="3.2.0">
+  <project timestamp="1741405228007" name="All files">
+    <metrics statements="229" coveredstatements="201" conditionals="69" coveredconditionals="58" methods="25" coveredmethods="25" elements="323" coveredelements="284" complexity="0" loc="229" ncloc="229" packages="2" files="8" classes="8"/>
     <package name="src">
-      <metrics statements="17" coveredstatements="17" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+      <metrics statements="17" coveredstatements="17" conditionals="16" coveredconditionals="16" methods="3" coveredmethods="3"/>
       <file name="jwt.ts" path="/home/runner/work/jwt-utils/jwt-utils/src/jwt.ts">
-        <metrics statements="17" coveredstatements="17" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="3"/>
+        <metrics statements="17" coveredstatements="17" conditionals="16" coveredconditionals="16" methods="3" coveredmethods="3"/>
         <line num="1" count="7" type="stmt"/>
         <line num="13" count="7" type="stmt"/>
-        <line num="20" count="24" type="cond" truecount="2" falsecount="0"/>
-        <line num="23" count="24" type="cond" truecount="2" falsecount="0"/>
-        <line num="25" count="24" type="stmt"/>
-        <line num="28" count="24" type="stmt"/>
-        <line num="32" count="24" type="stmt"/>
-        <line num="35" count="7" type="stmt"/>
-        <line num="36" count="30" type="stmt"/>
-        <line num="37" count="30" type="stmt"/>
-        <line num="39" count="18" type="stmt"/>
-        <line num="40" count="18" type="stmt"/>
-        <line num="44" count="7" type="stmt"/>
-        <line num="45" count="25" type="stmt"/>
-        <line num="46" count="25" type="stmt"/>
-        <line num="48" count="14" type="stmt"/>
-        <line num="49" count="14" type="stmt"/>
+        <line num="20" count="26" type="cond" truecount="2" falsecount="0"/>
+        <line num="23" count="26" type="cond" truecount="2" falsecount="0"/>
+        <line num="25" count="26" type="stmt"/>
+        <line num="32" count="26" type="stmt"/>
+        <line num="39" count="26" type="stmt"/>
+        <line num="42" count="7" type="stmt"/>
+        <line num="47" count="32" type="stmt"/>
+        <line num="48" count="32" type="stmt"/>
+        <line num="53" count="20" type="stmt"/>
+        <line num="54" count="20" type="stmt"/>
+        <line num="58" count="7" type="stmt"/>
+        <line num="63" count="25" type="stmt"/>
+        <line num="64" count="25" type="stmt"/>
+        <line num="69" count="14" type="stmt"/>
+        <line num="70" count="14" type="stmt"/>
       </file>
     </package>
     <package name="src.middleware">
