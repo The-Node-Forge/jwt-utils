@@ -1,5 +1,6 @@
-import { generateTokens, verifyToken, verifyRefreshToken } from '../src/jwt';
 import { Algorithm } from 'jsonwebtoken';
+
+import { generateTokens, verifyToken, verifyRefreshToken } from '../src/jwt';
 
 describe('JWT Utility Functions', () => {
   const payload = { id: '12345', role: 'admin' };
