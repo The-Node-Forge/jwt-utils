@@ -1,6 +1,6 @@
 {
   "name": "@the-node-forge/jwt-utils",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A flexible, lightweight Node.js JWT library for generating, verifying, and managing JSON Web Tokens (JWTs). Supports access and refresh tokens with customizable secrets for authentication and role-based access control. Includes middleware for Express, Fastify, Koa, Hapi, NestJS, and Next.js to streamline authentication in modern web applications.",
   "exports": {
     ".": {
