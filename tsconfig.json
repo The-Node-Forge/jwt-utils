@@ -9,6 +9,7 @@
     "declaration": true,
     "declarationMap": true,
     "emitDeclarationOnly": false,
+    "isolatedModules": true,
     "rootDir": "src",
     "resolveJsonModule": true,
     "typeRoots": ["./node_modules/@types", "./src/types"]

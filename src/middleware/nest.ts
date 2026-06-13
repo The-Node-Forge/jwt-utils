@@ -1,27 +1,18 @@
 /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
-let NestJsCommon: any;
-let verifyToken: any;
-let verifyRefreshToken: any;
-
-try {
-  NestJsCommon = require('@nestjs/common');
-} catch (error) {
-  throw new Error(
-    "NestJS middleware is being used, but '@nestjs/common' is not installed. Please install it as a peer dependency.",
-  );
-}
-
 import {
   CanActivate,
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
 
+let verifyToken: any;
+let verifyRefreshToken: any;
+
 export class AuthenticateToken implements CanActivate {
   constructor(
-    private readonly accessSecret: string,
-    private readonly refreshSecret: string,
+    private readonly _accessSecret: string,
+    private readonly _refreshSecret: string,
   ) {
     if (!verifyToken) {
       ({ verifyToken } = require('../jwt'));
@@ -45,9 +36,9 @@ export class AuthenticateToken implements CanActivate {
     let decoded;
 
     if (request.url.includes('/refresh')) {
-      decoded = verifyRefreshToken(token, this.refreshSecret);
+      decoded = verifyRefreshToken(token, this._refreshSecret);
     } else {
-      decoded = verifyToken(token, this.accessSecret);
+      decoded = verifyToken(token, this._accessSecret);
     }
 
     if (!decoded) {

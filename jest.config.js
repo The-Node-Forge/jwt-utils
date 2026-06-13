@@ -4,4 +4,11 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js'], // Recognize TypeScript and JavaScript files
   testMatch: ['**/tests/**/*.test.ts'], // Match test files
   verbose: true, // Show detailed test results
+  globals: {
+    'ts-jest': {
+      diagnostics: {
+        ignoreCodes: [151002], // Suppress TS151002 warning about hybrid module kind
+      },
+    },
+  },
 };

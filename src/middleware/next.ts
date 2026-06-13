@@ -5,7 +5,7 @@ let verifyToken: any;
 let verifyRefreshToken: any;
 
 export function authenticateToken(
-  handler: (req: any, res: any) => void,
+  handler: (_req: any, _res: any) => void,
   accessSecret: string,
   refreshSecret: string,
   allowRefreshToken: boolean = false,
