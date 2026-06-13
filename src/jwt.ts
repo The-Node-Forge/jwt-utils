@@ -5,7 +5,7 @@ export interface TokenPayload {
   role: string;
 }
 
-interface TokenOptions extends SignOptions {
+export interface TokenOptions extends SignOptions {
   accessExpiresIn?: string;
   refreshExpiresIn?: string;
 }

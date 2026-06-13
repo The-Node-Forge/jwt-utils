@@ -32,14 +32,15 @@ export function authenticateToken(accessSecret: string) {
     h: ResponseToolkit,
   ): Promise<Lifecycle.ReturnValue> => {
     const authHeader = request.headers.authorization;
+    const authHeaderStr = Array.isArray(authHeader) ? authHeader[0] : authHeader;
 
-    if (!authHeader?.startsWith('Bearer ')) {
+    if (!authHeaderStr?.startsWith('Bearer ')) {
       return h
         .response({ message: 'Unauthorized: No token provided or invalid format' })
         .code(401);
     }
 
-    const [, token] = authHeader.split(' ');
+    const [, token] = authHeaderStr.split(' ');
 
     if (!token) {
       return h.response({ message: 'Unauthorized: Missing token' }).code(401);

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
 
 export { generateTokens, verifyToken, verifyRefreshToken } from './jwt.js';
+export type { TokenPayload, TokenOptions } from './jwt.js';
 
 export const expressAuth = () =>
   require('./middleware/express.js').authenticateToken;
