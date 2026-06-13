@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
 
 export { generateTokens, verifyToken, verifyRefreshToken } from './jwt.js';
 

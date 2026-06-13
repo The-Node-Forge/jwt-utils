@@ -25,7 +25,7 @@ control (RBAC).**
 generating, verifying, and managing JSON Web Tokens (JWTs). It simplifies
 authentication and token-based authorization for web applications and APIs.
 
-## **🚀 Features**
+## **Features**
 
 - ✅ **Generate JWTs** – Create signed JWTs with custom payloads and expiration
   times.
@@ -45,7 +45,7 @@ authentication and token-based authorization for web applications and APIs.
 
 ---
 
-## **📦 Installation**
+## **Installation**
 
 ```sh
 npm install @the-node-forge/jwt-utils
@@ -59,11 +59,11 @@ yarn add @the-node-forge/jwt-utils
 
 ---
 
-## **🔧 Usage**
+## **Usage**
 
 ### **Generating Access & Refresh Tokens**
 
-### **1⃣ Generate a Token (no options)**
+### **1. Generate a Token (no options)**
 
 ```ts
 import { generateTokens } from '@the-node-forge/jwt-utils';
@@ -105,7 +105,7 @@ console.log('Refresh Token:', refreshToken);
 
 ### **Verifying Tokens**
 
-### **2⃣ Verify a Token**
+### **2. Verify a Token**
 
 ```ts
 import { verifyToken, verifyRefreshToken } from '@the-node-forge/jwt-utils';
@@ -155,7 +155,7 @@ if (decoded) {
 
 ---
 
-## 🚀 **Integration with Web Frameworks**
+## **Integration with Web Frameworks**
 
 ### **Express Middleware**
 
@@ -357,7 +357,7 @@ start();
 
 ---
 
-## 🛡 **Role-Based Access Control (RBAC) using express**
+## **Role-Based Access Control (RBAC) using express**
 
 ```ts
 import express from 'express';
@@ -380,7 +380,7 @@ app.get(
 
 ---
 
-## **🔒 Security Best Practices**
+## **Security Best Practices**
 
 - Always use **secure, long, randomly generated** secret keys in production.
 - Store **tokens in HTTP-only cookies** instead of local storage when possible.
@@ -388,13 +388,13 @@ app.get(
 
 ---
 
-## **🌍 License**
+## **License**
 
 This project is licensed under the **MIT License**.
 
 ---
 
-## **🤝 Contributing**
+## **Contributing**
 
 Want to suggest a feature? Open an
 **[issue](https://github.com/the-node-forge/jwt-utils/issues)** or **contribute**!
@@ -409,7 +409,7 @@ We welcome contributions!
 
 ---
 
-## **🌟 Support & Links**
+## **Support & Links**
 
 - **NPM Package**:
   [@the-node-forge/jwt-utils](https://www.npmjs.com/package/@the-node-forge/jwt-utils)

@@ -65,7 +65,7 @@ console.log('Refresh Token:', refreshToken);
 
 ### **Verifying Tokens**
 
-### **2⃣ Verify a Token**
+### **2. Verify a Token**
 
 ```ts
 import { verifyToken, verifyRefreshToken } from '@the-node-forge/jwt-utils';
@@ -91,7 +91,7 @@ console.log('Decoded Refresh Token:', decodedRefresh);
 
 ---
 
-## 🚀 **Integration with Web Frameworks**
+## **Integration with Web Frameworks**
 
 ### **Express Middleware**
 
@@ -293,7 +293,7 @@ start();
 
 ---
 
-## 🛡 **Role-Based Access Control (RBAC) using express**
+## **Role-Based Access Control (RBAC) using express**
 
 ```ts
 import express from 'express';

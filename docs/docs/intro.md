@@ -16,20 +16,20 @@ use, it provides robust JWT authentication support for Express, Fastify, Koa, an
 other frameworks. Ideal for developers building secure APIs and authentication
 systems**
 
-### 📌 Getting Started
+### Getting Started
 
 - [Installation Guide](./INSTALLATION.md)
 - [Usage Instructions](./USAGE.md)
 <!-- - [Configuration](..guides/CONFIGURATION.md) -->
 
-### 🔧 Developer Guide
+### Developer Guide
 
 <!-- - [Contributing](./CONTRIBUTING.md) -->
 
 - [API Reference](./API_REFERENCE.md)
 - [Changelog](./CHANGELOG.md)
 
-### 📜 Community & Policies
+### Community & Policies
 
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 

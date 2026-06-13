@@ -30,7 +30,7 @@ systems.**
 
 ---
 
-## 📚 Installation
+## Installation
 
 ```sh
 npm install @the-node-forge/jwt-utils
@@ -44,7 +44,7 @@ yarn add @the-node-forge/jwt-utils
 
 ---
 
-## 🎯 **Basic Usage**
+## **Basic Usage**
 
 ### **Generating a JWT**
 
@@ -72,7 +72,7 @@ if (decoded) {
 
 ---
 
-## 📌 **Configuration Options**
+## **Configuration Options**
 
 | Parameter   | Type                | Description                                                                |
 | ----------- | ------------------- | -------------------------------------------------------------------------- |
@@ -81,7 +81,7 @@ if (decoded) {
 
 ---
 
-## 🚀 **Integration with Web Frameworks**
+## **Integration with Web Frameworks**
 
 ### **Express Middleware**
 
@@ -135,7 +135,7 @@ app.listen(3000, () => console.log('Server running on port 3000'));
 
 ---
 
-## 👑 **Contributing**
+## **Contributing**
 
 Contributions are welcome! Please submit
 [issues](https://github.com/The-Node-Forge/jwt-utils/issues) or  
@@ -143,14 +143,14 @@ Contributions are welcome! Please submit
 
 ---
 
-### ⭐ Support
+### Support
 
-If you find this package useful, please **give it a ⭐ on**  
+If you find this package useful, please **give it a star on**  
 [GitHub](https://github.com/The-Node-Forge/jwt-utils 'GitHub Repository')
 
 ---
 
-### 🔗 **Links**
+### **Links**
 
-- 📚 [NPM Package](https://www.npmjs.com/package/@the-node-forge/jwt-utils)
-- 🏠 [The Node Forge](https://github.com/The-Node-Forge)
+- [NPM Package](https://www.npmjs.com/package/@the-node-forge/jwt-utils)
+- [The Node Forge](https://github.com/The-Node-Forge)

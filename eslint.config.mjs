@@ -74,7 +74,10 @@ export default [
           'newlines-between': 'always',
         },
       ],
-      'no-unused-vars': ['warn'],
+      'no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'prefer-template': 'warn',
       'prefer-destructuring': [
