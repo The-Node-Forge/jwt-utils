@@ -116,7 +116,7 @@
   "devDependencies": {
     "@eslint/compat": "^1.2.5",
     "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^8.57.0",
+    "@eslint/js": "^10.0.1",
     "@hapi/hapi": "^21.3.12",
     "@nestjs/common": "^11.0.10",
     "@nestjs/core": "^11.0.10",
