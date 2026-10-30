@@ -4,6 +4,24 @@ description: A detailed changelog.
 sidebar_position: 5
 ---
 
+### Unreleased
+
+#### Security Fixes
+
+- **Koa Middleware:** `authenticateToken` and `authenticateRefreshToken` no longer
+  silently skip authentication for every path except a hardcoded `/protected` and
+  `/refresh`. Previously, mounting the middleware on any other route (e.g. `/admin`)
+  or a trailing-slash variant (`/protected/`) let unauthenticated requests through.
+  The middleware now authenticates every request it handles. **Behavior change:** if
+  you relied on `app.use(authenticateToken(...))` letting other paths through, mount
+  it per route instead (see the Koa example in the README).
+- **NestJS Guard:** The guard no longer picks refresh-token verification when the
+  request URL merely contains `/refresh` (e.g. `/admin?next=/refresh`), which let a
+  refresh token authenticate against access-guarded routes. Token type is now
+  explicit: `new AuthenticateToken(accessSecret, refreshSecret, true)` accepts
+  refresh tokens (for refresh routes), the default accepts access tokens only.
+  **Behavior change:** refresh routes must now pass `true` as the third argument.
+
 ### v1.1.1 - 2026-06-12
 
 #### Security Fixes

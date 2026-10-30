@@ -80,9 +80,49 @@ describe('NestJS JWT Guard', () => {
       getRequest.mockReturnValue(mockRequest);
     }
 
-    expect(guard.canActivate(mockContext as ExecutionContext)).toBe(true);
+    const refreshGuard = new AuthenticateToken(accessSecret, refreshSecret, true);
+    expect(refreshGuard.canActivate(mockContext as ExecutionContext)).toBe(true);
     expect(mockRequest.user).toBeDefined();
     expect(mockRequest.user.id).toBe('user123');
+  });
+
+  describe('token type is not inferred from the URL', () => {
+    const contextFor = (url: string, token: string) =>
+      ({
+        switchToHttp: () => ({
+          getRequest: () => ({ headers: { authorization: `Bearer ${token}` }, url }),
+        }),
+      }) as unknown as ExecutionContext;
+
+    const { accessToken, refreshToken } = generateTokens(
+      { id: 'user123', role: 'admin' },
+      accessSecret,
+      refreshSecret,
+    );
+
+    test.each([
+      '/refresh',
+      '/admin?next=/refresh',
+      '/admin/refresh/../x',
+      '/a/refresh',
+    ])('❌ Rejects a refresh token on access-guarded url %s', (url) => {
+      expect(() => guard.canActivate(contextFor(url, refreshToken))).toThrow(
+        UnauthorizedException,
+      );
+    });
+
+    test('✅ Accepts an access token on a url containing /refresh', () => {
+      expect(
+        guard.canActivate(contextFor('/admin?next=/refresh', accessToken)),
+      ).toBe(true);
+    });
+
+    test('❌ Rejects an access token on a refresh-guarded route', () => {
+      const refreshGuard = new AuthenticateToken(accessSecret, refreshSecret, true);
+      expect(() =>
+        refreshGuard.canActivate(contextFor('/refresh', accessToken)),
+      ).toThrow(UnauthorizedException);
+    });
   });
 
   test('✅ Verifies access token correctly', () => {

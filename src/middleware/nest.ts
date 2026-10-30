@@ -9,10 +9,24 @@ import {
 let verifyToken: any;
 let verifyRefreshToken: any;
 
+/**
+ * NestJS guard that validates a Bearer token and attaches the decoded payload to
+ * `request.user`.
+ *
+ * By default only access tokens are accepted. Pass `allowRefreshToken = true`
+ * when guarding a refresh route (e.g. `new AuthenticateToken(a, r, true)`) to
+ * accept refresh tokens there instead. The token type is never inferred from the
+ * request URL.
+ *
+ * @param _accessSecret - Secret used to verify access tokens.
+ * @param _refreshSecret - Secret used to verify refresh tokens.
+ * @param _allowRefreshToken - Verify the token as a refresh token instead.
+ */
 export class AuthenticateToken implements CanActivate {
   constructor(
     private readonly _accessSecret: string,
     private readonly _refreshSecret: string,
+    private readonly _allowRefreshToken: boolean = false,
   ) {
     if (!verifyToken) {
       ({ verifyToken } = require('../jwt'));
@@ -35,7 +49,7 @@ export class AuthenticateToken implements CanActivate {
     const [, token] = authHeader.split(' ');
     let decoded;
 
-    if (request.url.includes('/refresh')) {
+    if (this._allowRefreshToken) {
       decoded = verifyRefreshToken(token, this._refreshSecret);
     } else {
       decoded = verifyToken(token, this._accessSecret);

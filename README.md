@@ -290,6 +290,33 @@ router.post('/refresh', authenticateRefreshToken(REFRESH_SECRET), async (ctx) =>
 });
 ```
 
+### **NestJS Guard**
+
+```ts
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { AuthenticateToken } from '@the-node-forge/jwt-utils/middleware/nest';
+
+const ACCESS_SECRET = 'your-access-secret';
+const REFRESH_SECRET = 'your-refresh-secret';
+
+@Controller()
+export class AuthController {
+  // Access-token routes (default)
+  @Get('protected')
+  @UseGuards(new AuthenticateToken(ACCESS_SECRET, REFRESH_SECRET))
+  protectedRoute(@Req() req) {
+    return { message: 'Access granted', user: req.user };
+  }
+
+  // Refresh route: the third argument makes the guard accept refresh tokens only
+  @Post('refresh')
+  @UseGuards(new AuthenticateToken(ACCESS_SECRET, REFRESH_SECRET, true))
+  refresh(@Req() req) {
+    return { message: 'Refresh token valid', user: req.user };
+  }
+}
+```
+
 ### **Hapi Middleware**
 
 ```ts
