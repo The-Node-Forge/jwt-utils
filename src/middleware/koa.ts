@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
+import type { VerifyTokenOptions } from '../jwt';
+
 let koa: any;
 let verifyToken: any;
 let verifyRefreshToken: any;
@@ -11,7 +13,10 @@ let verifyRefreshToken: any;
  *
  * @param accessSecret - Secret used to verify access tokens.
  */
-export function authenticateToken(accessSecret: string) {
+export function authenticateToken(
+  accessSecret: string,
+  options?: VerifyTokenOptions,
+) {
   if (!koa) {
     try {
       koa = require('koa');
@@ -35,7 +40,7 @@ export function authenticateToken(accessSecret: string) {
     }
 
     const [, token] = authHeader.split(' ');
-    const user = verifyToken(token, accessSecret);
+    const user = verifyToken(token, accessSecret, options);
 
     if (!user) {
       ctx.status = 403;
@@ -54,7 +59,10 @@ export function authenticateToken(accessSecret: string) {
  *
  * @param refreshSecret - Secret used to verify refresh tokens.
  */
-export function authenticateRefreshToken(refreshSecret: string) {
+export function authenticateRefreshToken(
+  refreshSecret: string,
+  options?: VerifyTokenOptions,
+) {
   if (!koa) {
     try {
       koa = require('koa');
@@ -78,7 +86,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
     }
 
     const [, token] = authHeader.split(' ');
-    const user = verifyRefreshToken(token, refreshSecret);
+    const user = verifyRefreshToken(token, refreshSecret, options);
 
     if (!user) {
       ctx.status = 403;

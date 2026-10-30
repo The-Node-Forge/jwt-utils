@@ -2,6 +2,8 @@
 
 import type { FastifyRequest } from 'fastify';
 
+import type { VerifyTokenOptions } from '../jwt';
+
 let fastify: any;
 let verifyToken: any;
 let verifyRefreshToken: any;
@@ -12,7 +14,10 @@ declare module 'fastify' {
   }
 }
 
-export function authenticateToken(accessSecret: string) {
+export function authenticateToken(
+  accessSecret: string,
+  options?: VerifyTokenOptions,
+) {
   if (!fastify) {
     try {
       fastify = require('fastify');
@@ -34,7 +39,7 @@ export function authenticateToken(accessSecret: string) {
     }
 
     const [, token] = authHeader.split(' ');
-    const user = verifyToken(token, accessSecret);
+    const user = verifyToken(token, accessSecret, options);
 
     if (!user) {
       return reply.status(403).send({ message: 'Forbidden: Invalid token' });
@@ -44,7 +49,10 @@ export function authenticateToken(accessSecret: string) {
   };
 }
 
-export function authenticateRefreshToken(refreshSecret: string) {
+export function authenticateRefreshToken(
+  refreshSecret: string,
+  options?: VerifyTokenOptions,
+) {
   if (!fastify) {
     try {
       fastify = require('fastify');
@@ -66,7 +74,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
     }
 
     const [, token] = authHeader.split(' ');
-    const user = verifyRefreshToken(token, refreshSecret);
+    const user = verifyRefreshToken(token, refreshSecret, options);
 
     if (!user) {
       return reply.status(403).send({ message: 'Forbidden: Invalid refresh token' });

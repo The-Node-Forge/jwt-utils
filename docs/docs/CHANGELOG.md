@@ -4,6 +4,17 @@ description: A detailed changelog.
 sidebar_position: 5
 ---
 
+### Unreleased
+
+#### Improvements
+
+- **Middleware:** Every authentication middleware (Express, Fastify, Koa, Hapi,
+  Next.js, NestJS) now accepts optional `{ audience, issuer }` and enforces them when
+  set. Previously the claims that `generateTokens` stamps on each token were never
+  checked, so a token minted for another service sharing the same secret was
+  accepted. The option is additive; behavior without it is unchanged. Exports a new
+  `VerifyTokenOptions` type.
+
 ### v2.0.0 - 2026-10-30
 
 > **Upgrading from 1.x:** this release contains security fixes that change behavior.

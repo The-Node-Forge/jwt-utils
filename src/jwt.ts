@@ -8,6 +8,16 @@ export interface TokenPayload {
   role: string;
 }
 
+/**
+ * Claims a token must carry to be accepted. When set, tokens whose `aud` / `iss`
+ * do not match are rejected, so a token minted for another service that shares the
+ * same secret cannot be replayed here.
+ */
+export interface VerifyTokenOptions {
+  audience?: string;
+  issuer?: string;
+}
+
 export interface TokenOptions extends SignOptions {
   accessExpiresIn?: string;
   refreshExpiresIn?: string;
@@ -77,7 +87,7 @@ export function generateTokens(
 export function verifyToken(
   token: string,
   accessSecret: string,
-  options?: { audience?: string; issuer?: string },
+  options?: VerifyTokenOptions,
 ) {
   try {
     return jwt.verify(token, accessSecret, {
@@ -102,7 +112,7 @@ export function verifyToken(
 export function verifyRefreshToken(
   token: string,
   refreshSecret: string,
-  options?: { audience?: string; issuer?: string },
+  options?: VerifyTokenOptions,
 ) {
   try {
     return jwt.verify(token, refreshSecret, {
