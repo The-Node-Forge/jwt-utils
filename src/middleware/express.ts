@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
+import type { VerifyTokenOptions } from '../jwt';
+
 let express: any;
 let verifyToken: any;
 let verifyRefreshToken: any;
 
-export const authenticateToken = (accessSecret: string) => {
+export const authenticateToken = (
+  accessSecret: string,
+  options?: VerifyTokenOptions,
+) => {
   if (!express) {
     try {
       express = require('express');
@@ -27,7 +32,7 @@ export const authenticateToken = (accessSecret: string) => {
     }
 
     const [, token] = authHeader.split(' ');
-    const user = verifyToken(token, accessSecret);
+    const user = verifyToken(token, accessSecret, options);
 
     if (!user) {
       res.status(403).json({ message: 'Forbidden' });
@@ -39,7 +44,10 @@ export const authenticateToken = (accessSecret: string) => {
   };
 };
 
-export const authenticateRefreshToken = (refreshSecret: string) => {
+export const authenticateRefreshToken = (
+  refreshSecret: string,
+  options?: VerifyTokenOptions,
+) => {
   if (!express) {
     try {
       express = require('express');
@@ -62,7 +70,7 @@ export const authenticateRefreshToken = (refreshSecret: string) => {
     }
 
     const [, token] = authHeader.split(' ');
-    const user = verifyRefreshToken(token, refreshSecret);
+    const user = verifyRefreshToken(token, refreshSecret, options);
 
     if (!user) {
       res.status(403).json({ message: 'Forbidden' });

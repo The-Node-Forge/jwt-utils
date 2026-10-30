@@ -2,6 +2,8 @@
 
 import type { Request, ResponseToolkit, Lifecycle } from '@hapi/hapi';
 
+import type { VerifyTokenOptions } from '../jwt';
+
 let hapi: any;
 let verifyToken: any;
 let verifyRefreshToken: any;
@@ -12,7 +14,10 @@ declare module '@hapi/hapi' {
   }
 }
 
-export function authenticateToken(accessSecret: string) {
+export function authenticateToken(
+  accessSecret: string,
+  options?: VerifyTokenOptions,
+) {
   if (!hapi) {
     try {
       hapi = require('@hapi/hapi');
@@ -46,7 +51,7 @@ export function authenticateToken(accessSecret: string) {
       return h.response({ message: 'Unauthorized: Missing token' }).code(401);
     }
 
-    const decoded = verifyToken(token, accessSecret);
+    const decoded = verifyToken(token, accessSecret, options);
 
     if (!decoded) {
       return h
@@ -59,7 +64,10 @@ export function authenticateToken(accessSecret: string) {
   };
 }
 
-export function authenticateRefreshToken(refreshSecret: string) {
+export function authenticateRefreshToken(
+  refreshSecret: string,
+  options?: VerifyTokenOptions,
+) {
   if (!hapi) {
     try {
       hapi = require('@hapi/hapi');
@@ -93,7 +101,7 @@ export function authenticateRefreshToken(refreshSecret: string) {
       return h.response({ message: 'Unauthorized: Missing token' }).code(401);
     }
 
-    const decoded = verifyRefreshToken(token, refreshSecret);
+    const decoded = verifyRefreshToken(token, refreshSecret, options);
 
     if (!decoded) {
       return h

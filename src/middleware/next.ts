@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-unused-vars */
 
+import type { VerifyTokenOptions } from '../jwt';
+
 let next: any;
 let verifyToken: any;
 let verifyRefreshToken: any;
@@ -9,6 +11,7 @@ export function authenticateToken(
   accessSecret: string,
   refreshSecret: string,
   allowRefreshToken: boolean = false,
+  options?: VerifyTokenOptions,
 ) {
   if (!next) {
     try {
@@ -37,9 +40,9 @@ export function authenticateToken(
     let decoded;
 
     if (allowRefreshToken) {
-      decoded = verifyRefreshToken(token, refreshSecret);
+      decoded = verifyRefreshToken(token, refreshSecret, options);
     } else {
-      decoded = verifyToken(token, accessSecret);
+      decoded = verifyToken(token, accessSecret, options);
     }
 
     if (!decoded) {

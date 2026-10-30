@@ -155,6 +155,30 @@ if (decoded) {
 
 ---
 
+### **Restricting Audience and Issuer**
+
+`generateTokens` stamps every token with an audience (`my-app`) and issuer
+(`auth-service`) unless you override them. Middleware does not check those claims
+unless you ask it to, so a token minted for another service that shares the same
+secret would be accepted. Pass `{ audience, issuer }` to require them:
+
+```ts
+const claims = { audience: 'my-app', issuer: 'auth-service' };
+
+// Express / Fastify / Koa / Hapi: second argument
+app.get('/protected', authenticateToken(ACCESS_SECRET, claims), handler);
+app.post('/refresh', authenticateRefreshToken(REFRESH_SECRET, claims), handler);
+
+// Next.js: fifth argument
+authenticateToken(handler, ACCESS_SECRET, REFRESH_SECRET, false, claims);
+
+// NestJS: fourth constructor argument
+new AuthenticateToken(ACCESS_SECRET, REFRESH_SECRET, false, claims);
+```
+
+Either claim can be omitted to only check the other. Without the option, behavior is
+unchanged.
+
 ## **Integration with Web Frameworks**
 
 ### **Express Middleware**

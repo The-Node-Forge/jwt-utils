@@ -6,6 +6,8 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 
+import type { VerifyTokenOptions } from '../jwt';
+
 let verifyToken: any;
 let verifyRefreshToken: any;
 
@@ -21,12 +23,14 @@ let verifyRefreshToken: any;
  * @param _accessSecret - Secret used to verify access tokens.
  * @param _refreshSecret - Secret used to verify refresh tokens.
  * @param _allowRefreshToken - Verify the token as a refresh token instead.
+ * @param _options - Optional expected `audience` / `issuer` claims.
  */
 export class AuthenticateToken implements CanActivate {
   constructor(
     private readonly _accessSecret: string,
     private readonly _refreshSecret: string,
     private readonly _allowRefreshToken: boolean = false,
+    private readonly _options?: VerifyTokenOptions,
   ) {
     if (!verifyToken) {
       ({ verifyToken } = require('../jwt'));
@@ -50,9 +54,9 @@ export class AuthenticateToken implements CanActivate {
     let decoded;
 
     if (this._allowRefreshToken) {
-      decoded = verifyRefreshToken(token, this._refreshSecret);
+      decoded = verifyRefreshToken(token, this._refreshSecret, this._options);
     } else {
-      decoded = verifyToken(token, this._accessSecret);
+      decoded = verifyToken(token, this._accessSecret, this._options);
     }
 
     if (!decoded) {
