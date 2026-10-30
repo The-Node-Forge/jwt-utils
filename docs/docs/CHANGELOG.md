@@ -4,7 +4,12 @@ description: A detailed changelog.
 sidebar_position: 5
 ---
 
-### Unreleased
+### v2.0.0 - 2026-10-30
+
+> **Upgrading from 1.x:** this release contains security fixes that change behavior.
+> Koa middleware now authenticates every request it handles, NestJS refresh routes
+> must pass `true` as the third guard argument, and `generateTokens` throws on
+> identical secrets or non-HMAC algorithms. See the notes below.
 
 #### Security Fixes
 
@@ -29,6 +34,16 @@ sidebar_position: 5
   same set instead of relying on library defaults. **Behavior change:** callers
   passing a non-HMAC algorithm or identical secrets now get an error at token
   generation time.
+
+#### Improvements
+
+- Test coverage raised from 88% to 100% of `src/` (193 tests), including negative
+  paths for every middleware and missing peer-dependency errors. Jest now enforces
+  coverage thresholds.
+- Added `SECURITY.md` and enabled private vulnerability reporting.
+- CI hardening: least-privilege workflow permissions, actions pinned to commit SHAs,
+  `npm ci`, a production dependency audit step, and Dependabot.
+- Documented the NestJS guard in the README and API reference.
 
 ### v1.1.1 - 2026-06-12
 
