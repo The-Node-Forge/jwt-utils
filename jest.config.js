@@ -3,6 +3,11 @@ module.exports = {
   testEnvironment: 'node', // Use Node.js environment for tests
   moduleFileExtensions: ['ts', 'js'], // Recognize TypeScript and JavaScript files
   testMatch: ['**/tests/**/*.test.ts'], // Match test files
+  moduleNameMapper: { '^(\\.{1,2}/.*)\\.js$': '$1' }, // Resolve NodeNext-style .js imports to .ts sources
+  collectCoverageFrom: ['src/**/*.ts', '!src/types/**'], // Include untested files in coverage
+  coverageThreshold: {
+    global: { statements: 95, branches: 90, functions: 100, lines: 95 },
+  },
   verbose: true, // Show detailed test results
   globals: {
     'ts-jest': {
