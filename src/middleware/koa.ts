@@ -4,6 +4,13 @@ let koa: any;
 let verifyToken: any;
 let verifyRefreshToken: any;
 
+/**
+ * Koa middleware that requires a valid access token on every request it handles.
+ * Mount it per route (e.g. with `@koa/router`) or via `app.use` to protect
+ * everything after it. On success the decoded payload is set on `ctx.state.user`.
+ *
+ * @param accessSecret - Secret used to verify access tokens.
+ */
 export function authenticateToken(accessSecret: string) {
   if (!koa) {
     try {
@@ -20,12 +27,6 @@ export function authenticateToken(accessSecret: string) {
   }
 
   return async (ctx: any, next: any) => {
-    // Skip auth for unknown routes
-    if (ctx.path !== '/protected') {
-      await next();
-      return;
-    }
-
     const authHeader = ctx.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       ctx.status = 401;
@@ -47,6 +48,12 @@ export function authenticateToken(accessSecret: string) {
   };
 }
 
+/**
+ * Koa middleware that requires a valid refresh token on every request it handles.
+ * On success the decoded payload is set on `ctx.state.user`.
+ *
+ * @param refreshSecret - Secret used to verify refresh tokens.
+ */
 export function authenticateRefreshToken(refreshSecret: string) {
   if (!koa) {
     try {
@@ -63,11 +70,6 @@ export function authenticateRefreshToken(refreshSecret: string) {
   }
 
   return async (ctx: any, next: any) => {
-    if (ctx.path !== '/refresh') {
-      await next();
-      return;
-    }
-
     const authHeader = ctx.headers.authorization;
     if (!authHeader?.startsWith('Bearer ')) {
       ctx.status = 401;

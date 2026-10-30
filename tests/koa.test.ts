@@ -10,8 +10,17 @@ const refreshSecret = 'test-refresh-secret';
 
 const app = new Koa();
 
-app.use(authenticateToken(accessSecret));
-app.use(authenticateRefreshToken(refreshSecret));
+// Mount each guard on a single path, as a router would.
+const only =
+  (path: string, middleware: (_ctx: any, _next: any) => Promise<void>) =>
+  (ctx: any, next: any) => (ctx.path === path ? middleware(ctx, next) : next());
+
+app.use(only('/protected', authenticateToken(accessSecret)));
+app.use(only('/refresh', authenticateRefreshToken(refreshSecret)));
+
+// Guards applied to every request, with no path filtering.
+app.use(only('/admin', authenticateToken(accessSecret)));
+app.use(only('/admin/', authenticateToken(accessSecret)));
 
 app.use(async (ctx) => {
   if (ctx.path === '/protected') {
@@ -21,6 +30,11 @@ app.use(async (ctx) => {
       return;
     }
     ctx.body = { message: 'Protected', user: ctx.state.user };
+    return;
+  }
+
+  if (ctx.path === '/admin' || ctx.path === '/admin/') {
+    ctx.body = { message: 'Admin', user: ctx.state.user };
     return;
   }
 
@@ -109,5 +123,27 @@ describe('Koa Middleware: authenticateToken & authenticateRefreshToken', () => {
       .set('Authorization', `${accessToken}`);
 
     expect(response.status).toBe(401);
+  });
+
+  test('❌ Protects any path the middleware is mounted on, not just /protected', async () => {
+    const response = await request(server).get('/admin');
+    expect(response.status).toBe(401);
+
+    const withToken = await request(server)
+      .get('/admin')
+      .set('Authorization', `Bearer ${accessToken}`);
+    expect(withToken.status).toBe(200);
+  });
+
+  test('❌ Does not skip auth on a trailing-slash path', async () => {
+    const response = await request(server).get('/admin/');
+    expect(response.status).toBe(401);
+  });
+
+  test('❌ Rejects a refresh token on an access-protected route', async () => {
+    const response = await request(server)
+      .get('/protected')
+      .set('Authorization', `Bearer ${refreshToken}`);
+    expect(response.status).toBe(403);
   });
 });
