@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-require-imports, @typescript-eslint/no-var-requires */
+
 /**
  * Each middleware lazily requires its framework and must fail with a clear message
  * when the optional peer dependency is not installed.
