@@ -61,12 +61,24 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --quiet && git diff --staged --quiet || git commit -m "chore: auto-format & lint fixes"
-
-          if [[ "$GITHUB_REF" != refs/pull/* ]]; then
-            git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "HEAD:${GITHUB_REF}"
-          else
-            echo "Skipping push: Cannot push changes to a PR merge ref."
+          if git diff --staged --quiet; then
+            echo "No auto-format changes to commit."
+            exit 0
           fi
+          git commit -m "chore: auto-format & lint fixes"
+
+          if [[ "$GITHUB_REF" == refs/pull/* ]]; then
+            echo "Skipping push: Cannot push changes to a PR merge ref."
+            exit 0
+          fi
+
+          # Another merge may have landed while CI ran; rebase and retry.
+          remote="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          for attempt in 1 2 3; do
+            git push "$remote" "HEAD:${GITHUB_REF}" && exit 0
+            git pull --rebase "$remote" "${GITHUB_REF}"
+          done
+          echo "::error::Could not push the auto-format commit after 3 attempts"
+          exit 1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

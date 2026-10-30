@@ -37,7 +37,7 @@ sidebar_position: 5
 
 #### Improvements
 
-- Test coverage raised from 88% to 100% of `src/` (193 tests), including negative
+- Test coverage raised from 88% to 100% of `src/` (200+ tests), including negative
   paths for every middleware and missing peer-dependency errors. Jest now enforces
   coverage thresholds.
 - Added `SECURITY.md` and enabled private vulnerability reporting.
