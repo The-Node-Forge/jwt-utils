@@ -21,6 +21,12 @@ secrets.
 
 - `object` – An object containing `accessToken` and `refreshToken`.
 
+### **Throws:**
+
+- If `accessSecret` and `refreshSecret` are identical (a refresh token would
+  otherwise also be accepted as an access token).
+- If `options.algorithm` is not one of `HS256`, `HS384` or `HS512`.
+
 ### **Examples:**
 
 ### **1⃣ Generate a Token (no options)**

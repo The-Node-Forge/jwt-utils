@@ -1,6 +1,11 @@
 import { Algorithm } from 'jsonwebtoken';
 
-import { generateTokens, verifyToken, verifyRefreshToken } from '../src/jwt';
+import {
+  generateTokens,
+  verifyToken,
+  verifyRefreshToken,
+  TokenOptions,
+} from '../src/jwt';
 
 describe('JWT Utility Functions', () => {
   const payload = { id: '12345', role: 'admin' };
@@ -112,5 +117,61 @@ describe('JWT Utility Functions', () => {
       issuer: 'auth-service',
     });
     expect(decoded).toBeNull();
+  });
+
+  describe('hardening', () => {
+    test('❌ Throws when access and refresh secrets are identical', () => {
+      expect(() => generateTokens(payload, 'same-secret', 'same-secret')).toThrow(
+        /must be different/,
+      );
+    });
+
+    test.each(['none', 'RS256', 'ES256'])(
+      '❌ Throws for unsupported signing algorithm %s',
+      (algorithm) => {
+        expect(() =>
+          generateTokens(payload, accessSecret, refreshSecret, {
+            algorithm,
+          } as unknown as TokenOptions),
+        ).toThrow(/Unsupported algorithm/);
+      },
+    );
+
+    test.each(['HS256', 'HS384', 'HS512'] as const)(
+      '✅ Round-trips %s tokens',
+      (algorithm) => {
+        const tokens = generateTokens(payload, accessSecret, refreshSecret, {
+          algorithm,
+        });
+        expect(verifyToken(tokens.accessToken, accessSecret)).toMatchObject(payload);
+        expect(verifyRefreshToken(tokens.refreshToken, refreshSecret)).toMatchObject(
+          payload,
+        );
+      },
+    );
+
+    test('❌ Rejects an unsigned (alg: none) token', () => {
+      const unsigned = [
+        Buffer.from(JSON.stringify({ alg: 'none', typ: 'JWT' })).toString(
+          'base64url',
+        ),
+        Buffer.from(JSON.stringify(payload)).toString('base64url'),
+        '',
+      ].join('.');
+
+      expect(verifyToken(unsigned, accessSecret)).toBeNull();
+      expect(verifyRefreshToken(unsigned, refreshSecret)).toBeNull();
+    });
+
+    test('❌ Rejects a token signed with a non-HMAC algorithm header', () => {
+      const header = Buffer.from(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+      const forged = [
+        header.toString('base64url'),
+        Buffer.from(JSON.stringify(payload)).toString('base64url'),
+        'c2ln',
+      ].join('.');
+
+      expect(verifyToken(forged, accessSecret)).toBeNull();
+    });
   });
 });

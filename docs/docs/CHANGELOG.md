@@ -21,6 +21,14 @@ sidebar_position: 5
   explicit: `new AuthenticateToken(accessSecret, refreshSecret, true)` accepts
   refresh tokens (for refresh routes), the default accepts access tokens only.
   **Behavior change:** refresh routes must now pass `true` as the third argument.
+- **Core:** `generateTokens` now throws if `accessSecret` and `refreshSecret` are
+  identical, since a refresh token would otherwise also verify as an access token.
+- **Core:** `generateTokens` only accepts `HS256`, `HS384` or `HS512` for
+  `options.algorithm` (previously any `jsonwebtoken` algorithm, including `none`, was
+  passed through), and `verifyToken` / `verifyRefreshToken` pin `algorithms` to the
+  same set instead of relying on library defaults. **Behavior change:** callers
+  passing a non-HMAC algorithm or identical secrets now get an error at token
+  generation time.
 
 ### v1.1.1 - 2026-06-12
 
